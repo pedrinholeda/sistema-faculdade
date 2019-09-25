@@ -1,0 +1,15 @@
+<h3>Cursos Oferecidos: </h3>
+<hr>
+
+{{#each categorias}}
+<div class="card mt-4">
+  <div class="card-body">
+    <a href="/categorias/{{slug}}"><button type="button" class="btn btn-outline-dark btn-lg btn-block">
+        <h5>{{nome}}</h5> <span class="badge badge-light">{{categorias.length}}</span>
+      </button></a>
+  </div>
+</div>
+
+{{else}}
+
+{{/each}}

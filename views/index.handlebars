@@ -1,0 +1,30 @@
+<div id="carouselSite" class="carousel slide" data-ride="carousel"></div>
+<div class="jumbotron">
+  <h1 class="display-4">Bem-vindo a Facultech <i class="fas fa-code"></i></h1>
+  <p class="lead"> Instituição de Tecnologia, desenvolvido com Node.js + Express + MongoDB</p>
+  <hr class="my-4">
+  {{!-- <img class="card-img-top class=" src="https://i.imgur.com/EreWqyS.gif"> --}}
+  <p>Aqui você pode aprender sobre o mundo da computação</p>
+  <a class="btn btn-outline-primary" href="/usuarios/registro" role="button">Crie uma Conta</a>
+</div>
+
+<hr>
+<h2>Conteudos Recentes</h2>
+
+{{#each postagens}}
+<div class="card mt-4">
+  <div class="card-body">
+    <h3>{{titulo}}</h3>
+    <p>{{descricao}}</p>
+    <a href="/postagem/{{slug}}"><button type="button" class="btn btn-outline-dark">Leia Mais</button></a>
+    <hr>
+    <small>{{categoria.nome}}</small>
+    <br>
+    <small>Data de publicação: {{data}}</small>
+  </div>
+</div>
+
+{{else}}
+<h5>Nenhuma postagem</h5>
+{{/each}}
+</div>
