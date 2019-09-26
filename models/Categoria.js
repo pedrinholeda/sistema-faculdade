@@ -12,6 +12,11 @@ const Categoria = new Schema({
     type: String,
     require: true
   },
+  descricao: {
+    type: String,
+    required: true
+  },
+
   date: {
     type: Date,
     default: Date.now()

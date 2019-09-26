@@ -49,6 +49,14 @@ router.post("/categorias/nova", eAdmin, (req, res) => {
     erros.push({ texto: "Slug inválido" });
   }
 
+  if (
+    !req.body.descricao ||
+    typeof req.body.descricao == undefined ||
+    req.body.descricao == null
+  ) {
+    erros.push({ texto: "Descrição inválida" });
+  }
+
   if (req.body.nome.length < 2) {
     erros.push({ texto: "O Nome da categoria é muito pequeno" });
   }
@@ -58,7 +66,8 @@ router.post("/categorias/nova", eAdmin, (req, res) => {
   } else {
     const novaCategoria = {
       nome: req.body.nome,
-      slug: req.body.slug
+      slug: req.body.slug,
+      descricao: req.body.descricao
     };
     new Categoria(novaCategoria)
       .save()
@@ -92,6 +101,7 @@ router.post("/categorias/edit", eAdmin, (req, res) => {
     .then(categoria => {
       categoria.nome = req.body.nome;
       categoria.slug = req.body.slug;
+      categoria.descricao = req.body.descricao;
 
       categoria
         .save()
