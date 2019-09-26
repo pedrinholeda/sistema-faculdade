@@ -1,0 +1,35 @@
+{
+  "name": "blog-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.16.2",
+    "font-awesome": "^4.7.0",
+    "mdbootstrap": "^4.8.10",
+    "mongoose": "^5.6.11",
+    "nodemon": "^1.19.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrinholeda/Blog-APP.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pedrinholeda/Blog-APP/issues"
+  },
+  "homepage": "https://github.com/pedrinholeda/Blog-APP#readme"
+}

@@ -1,0 +1,68 @@
+{{#each erros}}
+<div class="alert alert-danger">{{texto}}</div>
+{{else}}
+
+{{/each}}
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Fazer Cadastro <i class="fas fa-user-plus"></i></h5>
+
+            <form action="" method="POST">
+              <label for="nome">Nome: </label>
+              <input type="text" name="nome" class="form-control" placeholder="Nome Completo" required>
+              <br>
+              <label for="email">Email: </label>
+              <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+              <br>
+              <label for="senha">Senha: </label>
+              <input type="password" name="senha" class="form-control" placeholder="Password" required>
+              <br>
+              <label for="senha2">Repita a sua senha: </label>
+              <input type="password" name="senha2" class="form-control" placeholder="Password" required>
+              <br>
+              <button class="btn btn-lg bbtn btn-outline-primary btn-block text-uppercase" type="submit">Cadastrar
+                </i></button>
+              <hr class="my-4">
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .card-signin {
+      border: 0;
+      border-radius: 1rem;
+      box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .card-signin .card-title {
+      margin-bottom: 2rem;
+      font-weight: 300;
+      font-size: 1.5rem;
+    }
+
+    .card-signin .card-body {
+      padding: 2rem;
+    }
+
+    .form-signin {
+      width: 100%;
+    }
+
+    .btn {
+      font-size: 80%;
+      border-radius: 5rem;
+      letter-spacing: .1rem;
+      font-weight: bold;
+      padding: 1rem;
+      transition: all 0.2s;
+    }
+  </style>
+</body>
