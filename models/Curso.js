@@ -3,7 +3,7 @@ const express = require("express");
 
 const Schema = mongoose.Schema;
 
-const Categoria = new Schema({
+const Curso = new Schema({
   nome: {
     type: String,
     require: true
@@ -23,4 +23,4 @@ const Categoria = new Schema({
   }
 });
 
-mongoose.model("categorias", Categoria);
+mongoose.model("cursos", Curso);

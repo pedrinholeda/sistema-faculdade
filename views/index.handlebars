@@ -11,20 +11,20 @@
 <hr>
 <h2>Conteudos Recentes</h2>
 
-{{#each postagens}}
+{{#each materias}}
 <div class="card mt-4">
   <div class="card-body">
     <h3>{{titulo}}</h3>
     <p>{{descricao}}</p>
-    <a href="/postagem/{{slug}}"><button type="button" class="btn btn-outline-dark">Leia Mais</button></a>
+    <a href="/materia/{{slug}}"><button type="button" class="btn btn-outline-dark">Leia Mais</button></a>
     <hr>
-    <small>{{categoria.nome}}</small>
+    <small>Curso: {{curso.nome}}</small>
     <br>
     <small>Data de publicação: {{data}}</small>
   </div>
 </div>
 
 {{else}}
-<h5>Nenhuma postagem</h5>
+<h5>Nenhuma materia</h5>
 {{/each}}
 </div>

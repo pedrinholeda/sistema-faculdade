@@ -1,0 +1,84 @@
+<body>
+  <div class="col-12 text-center my-5">
+    <h3 class="display-3"> Cursos oferecidos <i class="fas fa-code"></i></h3>
+    <p>Instituição de Ensino focada em abordar diversos
+      cursos dentro da área de tecnologia e inovação.</p>
+  </div>
+  {{#each cursos}}
+  <div class="row mb-5">
+
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top" src="https://i.imgur.com/r3814DQ.jpg">
+        <div class="card-body">
+          <h4 class="card-title text-center">{{nome}} </h4>
+          <h6 class="card-subtitle mb-2 text-muted">Descrição:</h6>
+          <p class="card- text">{{descricao}} </p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><small>{{date}}</small></li>
+          <li class="list-group-item">litora torquent</li>
+        </ul>
+
+        <div class="card-body">
+          <a href="/cursos/{{slug}}" class="card-link">Verificar Grade</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top" src="https://i.imgur.com/r3814DQ.jpg">
+        <div class="card-body">
+          <h4 class="card-title text-center">{{nome}} </h4>
+          <h6 class="card-subtitle mb-2 text-muted">Descrição:</h6>
+          <p class="card- text">{{descricao}} </p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><small>{{date}}</small></li>
+          <li class="list-group-item">litora torquent</li>
+        </ul>
+
+        <div class="card-body">
+          <a href="/cursos/{{slug}}" class="card-link">Verificar Grade</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top" src="https://i.imgur.com/r3814DQ.jpg">
+        <div class="card-body">
+          <h4 class="card-title text-center">{{nome}} </h4>
+          <h6 class="card-subtitle mb-2 text-muted">Descrição:</h6>
+          <p class="card- text">{{descricao}} </p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><small>{{date}}</small></li>
+          <li class="list-group-item">litora torquent</li>
+        </ul>
+
+        <div class="card-body">
+          <a href="/cursos/{{slug}}" class="card-link">Verificar Grade</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+{{!-- 
+<div class="row mb-5">
+  <div class="col-sm-5">
+    <div class="card mt-4">
+      <h5 class="card-title text-center">{{nome}}</h5>
+      <div class="card-body">
+        <p class="mb-2 text-muted">{{descricao}}</p>
+        <a href="/cursos/{{slug}}"><button type="button" class="btn btn-outline-dark btn-lg btn-block">
+            <h5>Verificar {{nome}}</h5> <span class="badge badge-light">{{cursos.length}}</span>
+          </button></a>
+      </div>
+    </div>
+  </div>
+</div> --}}
+
+{{else}}
+
+{{/each}}

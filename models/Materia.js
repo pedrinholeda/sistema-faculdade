@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Postagem = new Schema({
+const Materia = new Schema({
   titulo: {
     type: String,
     required: true
@@ -18,9 +18,9 @@ const Postagem = new Schema({
     type: String,
     required: true
   },
-  categoria: {
+  curso: {
     type: Schema.Types.ObjectId,
-    ref: "categorias",
+    ref: "cursos",
     required: true
   },
   data: {
@@ -29,4 +29,4 @@ const Postagem = new Schema({
   }
 });
 
-mongoose.model("postagens", Postagem);
+mongoose.model("materias", Materia);

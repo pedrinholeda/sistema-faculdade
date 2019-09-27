@@ -1,0 +1,20 @@
+<h2>Lista de materias:</h2>
+<hr>
+<a href="/admin/materias/add"><button type="button" class="btn btn-success">Nova materia</button></a>
+
+{{#each materias}}
+<div class="card mt-4">
+  <div class="card-body">
+    <h4>{{titulo}}</h4>
+    <p>Descrição: {{descricao}}</p>
+    <small>Data: {{data}}</small>
+    <br>
+    <small>Curso: {{curso.nome}}</small><br>
+    <a href="/admin/materias/edit/{{_id}}"><button class="btn btn-outline-success mt-3"> Editar materia </button></a>
+    <a href="/admin/materias/deletar/{{_id}}"><button class="btn btn-outline-danger mt-3"> Deletar materia
+      </button></a>
+  </div>
+</div>
+{{else}}
+<p>Nenhuma materias registrada!</p>
+{{/each}}

@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-require("../models/Categoria");
-require("../models/Postagem");
-const Postagem = mongoose.model("postagens");
-const Categoria = mongoose.model("categorias");
+require("../models/Curso");
+require("../models/Materia");
+const Materia = mongoose.model("materias");
+const Curso = mongoose.model("cursos");
 const { eAdmin } = require("../helpers/eAdmin"); // pega a função eAdmin dentro do objeto eAdmin
 
 router.get("/", eAdmin, (req, res) => {
@@ -15,23 +15,23 @@ router.get("/post", eAdmin, (req, res) => {
   res.send("Pagina de post");
 });
 
-router.get("/categorias", eAdmin, (req, res) => {
-  Categoria.find()
+router.get("/cursos", eAdmin, (req, res) => {
+  Curso.find()
     .sort({ date: "desc" })
-    .then(categorias => {
-      res.render("admin/categorias", { categorias: categorias });
+    .then(cursos => {
+      res.render("admin/cursos", { cursos: cursos });
     })
     .catch(err => {
-      req.flash("error_msg", "Houve um erro ao listar as categorias");
+      req.flash("error_msg", "Houve um erro ao listar os cursos");
       res.redirect("/admin");
     });
 });
 
-router.get("/categorias/add", eAdmin, (req, res) => {
-  res.render("admin/addcategorias");
+router.get("/cursos/add", eAdmin, (req, res) => {
+  res.render("admin/addcursos");
 });
 
-router.post("/categorias/nova", eAdmin, (req, res) => {
+router.post("/cursos/nova", eAdmin, (req, res) => {
   var erros = [];
   if (
     !req.body.nome ||
@@ -58,97 +58,97 @@ router.post("/categorias/nova", eAdmin, (req, res) => {
   }
 
   if (req.body.nome.length < 2) {
-    erros.push({ texto: "O Nome da categoria é muito pequeno" });
+    erros.push({ texto: "O Nome do curso é muito pequeno" });
   }
 
   if (erros.length > 0) {
-    res.render("admin/addcategorias", { erros: erros });
+    res.render("admin/addcursos", { erros: erros });
   } else {
-    const novaCategoria = {
+    const novaCurso = {
       nome: req.body.nome,
       slug: req.body.slug,
       descricao: req.body.descricao
     };
-    new Categoria(novaCategoria)
+    new Curso(novaCurso)
       .save()
       .then(() => {
-        req.flash("success_msg", "Categoria criada com sucesso!");
-        res.redirect("/admin/categorias");
+        req.flash("success_msg", "Curso criado com sucesso!");
+        res.redirect("/admin/cursos");
       })
       .catch(err => {
         req.flash(
           "error_msg",
-          "Houve um erro ao salvar a categoria, tente novamente!"
+          "Houve um erro ao salvar o curso, tente novamente!"
         );
         res.redirect("/admin");
       });
   }
 });
 
-router.get("/categorias/edit/:id", eAdmin, (req, res) => {
-  Categoria.findOne({ _id: req.params.id })
-    .then(categoria => {
-      res.render("admin/editcategorias", { categoria: categoria });
+router.get("/cursos/edit/:id", eAdmin, (req, res) => {
+  Curso.findOne({ _id: req.params.id })
+    .then(curso => {
+      res.render("admin/editcursos", { curso: curso });
     })
     .catch(err => {
-      req.flash("error_msg", "Esta categoria não existe");
-      res.redirect("/admin/categorias");
+      req.flash("error_msg", "Esta curso não existe");
+      res.redirect("/admin/cursos");
     });
 });
 
-router.post("/categorias/edit", eAdmin, (req, res) => {
-  Categoria.findOne({ _id: req.body.id })
-    .then(categoria => {
-      categoria.nome = req.body.nome;
-      categoria.slug = req.body.slug;
-      categoria.descricao = req.body.descricao;
+router.post("/cursos/edit", eAdmin, (req, res) => {
+  Curso.findOne({ _id: req.body.id })
+    .then(curso => {
+      curso.nome = req.body.nome;
+      curso.slug = req.body.slug;
+      curso.descricao = req.body.descricao;
 
-      categoria
+      curso
         .save()
         .then(() => {
-          req.flash("success_msg", "Categoria editada com sucesso!");
-          res.redirect("/admin/categorias");
+          req.flash("success_msg", "Curso editado com sucesso!");
+          res.redirect("/admin/cursos");
         })
         .catch(err => {
-          req.flash("error_msg", "Houve um erro ao editar a categoria");
-          res.redirect("/admin/categorias");
+          req.flash("error_msg", "Houve um erro ao editar o curso");
+          res.redirect("/admin/cursos");
         });
     })
     .catch(err => {
-      req.flash("error_msg", "Houve um erro ao editar a categoria");
-      res.redirect("/admin/categorias");
+      req.flash("error_msg", "Houve um erro ao editar o curso");
+      res.redirect("/admin/cursos");
     });
 });
 
-router.post("/categorias/deletar", eAdmin, (req, res) => {
-  Categoria.deleteOne({ _id: req.body.id })
+router.post("/cursos/deletar", eAdmin, (req, res) => {
+  Curso.deleteOne({ _id: req.body.id })
     .then(() => {
-      req.flash("success_msg", "Categoria deletada com sucesso!");
-      res.redirect("/admin/categorias");
+      req.flash("success_msg", "Curso deletada com sucesso!");
+      res.redirect("/admin/cursos");
     })
     .catch(err => {
-      req.flash("error_msg", "Houve um erro ao deletar a categoria");
-      res.redirect("/admin/categorias");
+      req.flash("error_msg", "Houve um erro ao deletar o curso");
+      res.redirect("/admin/cursos");
     });
 });
 
-router.get("/postagens", eAdmin, (req, res) => {
-  Postagem.find()
-    .populate("categoria")
+router.get("/materias", eAdmin, (req, res) => {
+  Materia.find()
+    .populate("curso")
     .sort({ data: "desc" })
-    .then(postagens => {
-      res.render("admin/postagens", { postagens: postagens });
+    .then(materias => {
+      res.render("admin/materias", { materias: materias });
     })
     .catch(err => {
-      req.flash("error_msg", "Houve um erro ao listar as postagens");
+      req.flash("error_msg", "Houve um erro ao listar as materias");
       res.redirect("/admin");
     });
 });
 
-router.get("/postagens/add", eAdmin, (req, res) => {
-  Categoria.find()
-    .then(categorias => {
-      res.render("admin/addpostagem", { categorias: categorias });
+router.get("/materias/add", eAdmin, (req, res) => {
+  Curso.find()
+    .then(cursos => {
+      res.render("admin/addmateria", { cursos: cursos });
     })
     .catch(err => {
       req.flash("error_msg", "Houve um erro ao carregar o formulario :( ");
@@ -156,52 +156,49 @@ router.get("/postagens/add", eAdmin, (req, res) => {
     });
 });
 
-router.post("/postagens/nova", eAdmin, (req, res) => {
+router.post("/materias/nova", eAdmin, (req, res) => {
   var erros = [];
-  if (req.body.categoria == "0") {
-    erros.push({ texto: "Categoria inválida, registre um categoria" });
+  if (req.body.curso == "0") {
+    erros.push({ texto: "Curso inválida, registre um curso" });
   }
 
   if (erros.length > 0) {
-    res.render("admin/addpostagem", { erros: erros });
+    res.render("admin/addmateria", { erros: erros });
   } else {
-    const novaPostagem = {
+    const novaMateria = {
       titulo: req.body.titulo,
       descricao: req.body.descricao,
       conteudo: req.body.conteudo,
-      categoria: req.body.categoria,
+      curso: req.body.curso,
       slug: req.body.slug
     };
 
-    new Postagem(novaPostagem)
+    new Materia(novaMateria)
       .save()
       .then(() => {
-        req.flash("success_msg", "Postagem criada com sucesso!");
-        res.redirect("/admin/postagens");
+        req.flash("success_msg", "Materia criada com sucesso!");
+        res.redirect("/admin/materias");
       })
       .catch(err => {
-        req.flash(
-          "error_msg",
-          "Houve um erro durante o salvamento da postagem"
-        );
-        res.redirect("/admin/postagens");
+        req.flash("error_msg", "Houve um erro durante o salvamento da materia");
+        res.redirect("/admin/materias");
       });
   }
 });
 
-router.get("/postagens/edit/:id", eAdmin, (req, res) => {
-  Postagem.findOne({ _id: req.params.id })
-    .then(postagem => {
-      Categoria.find()
-        .then(categorias => {
-          res.render("admin/editpostagens", {
-            categorias: categorias,
-            postagem: postagem
+router.get("/materias/edit/:id", eAdmin, (req, res) => {
+  Materia.findOne({ _id: req.params.id })
+    .then(materia => {
+      Curso.find()
+        .then(cursos => {
+          res.render("admin/editmaterias", {
+            cursos: cursos,
+            materia: materia
           });
         })
         .catch(err => {
-          req.flash("error_msg", "Houve um erro ao listar as categorias");
-          res.redirect("/admin/postagens");
+          req.flash("error_msg", "Houve um erro ao listar as cursos");
+          res.redirect("/admin/materias");
         });
     })
     .catch(err => {
@@ -209,43 +206,43 @@ router.get("/postagens/edit/:id", eAdmin, (req, res) => {
         "error_msg",
         "Houve um erro ao carregar o formulario de edição"
       );
-      res.redirect("/admin/postagens");
+      res.redirect("/admin/materias");
     });
 });
 
-router.post("/postagem/edit", eAdmin, (req, res) => {
-  Postagem.findOne({ _id: req.body.id })
-    .then(postagem => {
-      postagem.titulo = req.body.titulo;
-      postagem.slug = req.body.slug;
-      postagem.descricao = req.body.descricao;
-      postagem.conteudo = req.body.conteudo;
-      postagem.categoria = req.body.categoria;
+router.post("/materia/edit", eAdmin, (req, res) => {
+  Materia.findOne({ _id: req.body.id })
+    .then(materia => {
+      materia.titulo = req.body.titulo;
+      materia.slug = req.body.slug;
+      materia.descricao = req.body.descricao;
+      materia.conteudo = req.body.conteudo;
+      materia.curso = req.body.curso;
 
-      postagem.save().then(() => {
-        req.flash("success_msg", "Postagem editada com sucesso!");
-        res.redirect("/admin/postagens");
+      materia.save().then(() => {
+        req.flash("success_msg", "Materia editada com sucesso!");
+        res.redirect("/admin/materias");
       });
     })
     .catch(err => {
       req.flash("error_msg", "Erro interno");
-      res.redirect("/admin/postagens");
+      res.redirect("/admin/materias");
     })
     .catch(err => {
       req.flash("error_msg", "Houve um erro ao salvar a edição");
-      res.redirect("/admin/postagens");
+      res.redirect("/admin/materias");
     });
 });
 
-router.get("/postagens/deletar/:id", eAdmin, (req, res) => {
-  Postagem.remove({ _id: req.params.id })
+router.get("/materias/deletar/:id", eAdmin, (req, res) => {
+  Materia.remove({ _id: req.params.id })
     .then(() => {
-      req.flash("success_msg", "Postagem deletada com sucesso");
-      res.redirect("/admin/postagens");
+      req.flash("success_msg", "Materia deletada com sucesso");
+      res.redirect("/admin/materias");
     })
     .catch(err => {
       req.flash("error_msg", "Houve um erro interno");
-      res.redirect("/admin/postagens");
+      res.redirect("/admin/materias");
     });
 });
 
