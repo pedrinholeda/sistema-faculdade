@@ -8,10 +8,10 @@ const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const flash = require("connect-flash");
-require("./models/Postagem");
-const Postagem = mongoose.model("postagens");
-require("./models/Categoria");
-const Categoria = mongoose.model("categorias");
+require("./models/Materia");
+const Materia = mongoose.model("materias");
+require("./models/Curso");
+const Curso = mongoose.model("cursos");
 const usuarios = require("./routes/usuario");
 const passport = require("passport");
 require("./config/auth")(passport);
@@ -59,11 +59,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //rotas
 app.get("/", (req, res) => {
-  Postagem.find()
-    .populate("categoria")
+  Materia.find()
+    .populate("curso")
     .sort({ data: "desc" })
-    .then(postagens => {
-      res.render("index", { postagens: postagens });
+    .then(materias => {
+      res.render("index", { materias: materias });
     })
     .catch(err => {
       req.flash("error_msg", "Houve um erro interno");
@@ -71,13 +71,13 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/postagem/:slug", (req, res) => {
-  Postagem.findOne({ slug: req.params.slug })
-    .then(postagem => {
-      if (postagem) {
-        res.render("postagem/index", { postagem: postagem });
+app.get("/materia/:slug", (req, res) => {
+  Materia.findOne({ slug: req.params.slug })
+    .then(materia => {
+      if (materia) {
+        res.render("materia/index", { materia: materia });
       } else {
-        req.flash("error_msg", "Esta postagem não existe");
+        req.flash("error_msg", "Esta materia não existe");
         res.redirect("/");
       }
     })
@@ -87,26 +87,26 @@ app.get("/postagem/:slug", (req, res) => {
     });
 });
 
-app.get("/categorias", (req, res) => {
-  Categoria.find()
-    .then(categorias => {
-      res.render("categorias/index", { categorias: categorias });
+app.get("/cursos", (req, res) => {
+  Curso.find()
+    .then(cursos => {
+      res.render("cursos/index", { cursos: cursos });
     })
     .catch(err => {
-      req.flash("error_msg", "Houve um erro interno ao listar as categorias");
+      req.flash("error_msg", "Houve um erro interno ao listar os cursos");
       res.redirect("/");
     });
 });
 
-app.get("/categorias/:slug", (req, res) => {
-  Categoria.findOne({ slug: req.params.slug })
-    .then(categoria => {
-      if (categoria) {
-        Postagem.find({ categoria: categoria._id })
-          .then(postagens => {
-            res.render("categorias/postagens", {
-              postagens: postagens,
-              categoria: categoria
+app.get("/cursos/:slug", (req, res) => {
+  Curso.findOne({ slug: req.params.slug })
+    .then(curso => {
+      if (curso) {
+        Materia.find({ curso: curso._id })
+          .then(materias => {
+            res.render("cursos/materias", {
+              materias: materias,
+              curso: curso
             });
           })
           .catch(err => {
@@ -114,14 +114,14 @@ app.get("/categorias/:slug", (req, res) => {
             res.redirect("/");
           });
       } else {
-        req.flash("error_msg", "Esta categoria não existe");
+        req.flash("error_msg", "Este curso não existe");
         res.redirect("/");
       }
     })
     .catch(err => {
       req.flash(
         "error_msg",
-        "Houve um erro interno ao carregar a página desta categoria"
+        "Houve um erro interno ao carregar a página deste curso"
       );
       res.redirect("/");
     });
