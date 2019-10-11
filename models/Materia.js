@@ -23,6 +23,15 @@ const Materia = new Schema({
     ref: "cursos",
     required: true
   },
+  codigo: {
+    type: Number,
+    require: true,
+    unique: true
+  },
+  professor: {
+    type: Schema.Types.ObjectId,
+    ref: "usuarios"
+  },
   data: {
     type: Date,
     default: Date.now()

@@ -17,19 +17,29 @@
         <li class="nav-item active">
           <a class="nav-link" href="/cursos"> <i class="fas fa-graduation-cap"></i> Cursos</a>
         </li>
-
         <li class="nav-item active">
           <a class="nav-link" href="/usuarios/sobre" tabindex="-1" aria-disabled="true"><i class="far fa-list-alt"></i>
             Sobre</a>
         </li>
+        {{#if user}}
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownAcademic" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><i class="fas fa-book-reader"></i> Acadêmico</a>
+          {{!--Parte do Nome em teste --}}
+          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownAcademic">
+            <a class="dropdown-item" href="#">Nota das Provas</a>
+            <a class="dropdown-item" href="#">Consultar frequência</a>
+            <a class="dropdown-item" href="#">Atendimento</a>
+            {{else}}
+            {{/if}}
       </ul>
       <ul class="navbar-nav ml-auto">
         {{#if user}}
         <li class="nav-item dropdown active">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true"
+          <a class="nav-link dropdown-toggle" id="navbarDropdownUser" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false"><i class="fas fa-user"></i> Olá, {{user.nome}}</i></a>
           {{!--Parte do Nome em teste --}}
-          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownUser">
             <a class="dropdown-item" href="#">Minha Conta</a>
             <a class="dropdown-item" href="/usuarios/logout">Sair</a>
         <li class="nav-item">
