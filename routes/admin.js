@@ -207,11 +207,15 @@ router.get("/materias/edit/:id", eAdmin, (req, res) => {
     .then(materia => {
       Curso.find()
         .then(cursos => {
-          res.render("admin/editmaterias", {
-            cursos: cursos,
-            materia: materia
+          Usuario.find().then(usuarios => {
+            res.render("admin/editmaterias", {
+              cursos: cursos,
+              materia: materia,
+              usuarios: usuarios
+            });
           });
         })
+
         .catch(err => {
           req.flash("error_msg", "Houve um erro ao listar as cursos");
           res.redirect("/admin/materias");
@@ -251,7 +255,7 @@ router.post("/materia/edit", eAdmin, (req, res) => {
 });
 
 router.get("/materias/deletar/:id", eAdmin, (req, res) => {
-  Materia.remove({ _id: req.params.id })
+  Materia.deleteOne({ _id: req.params.id })
     .then(() => {
       req.flash("success_msg", "Materia deletada com sucesso");
       res.redirect("/admin/materias");
