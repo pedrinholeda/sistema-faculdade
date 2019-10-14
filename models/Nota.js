@@ -14,10 +14,6 @@ const Nota = new Schema({
     type: Schema.Types.ObjectId,
     ref: "usuarios"
   },
-  alunos: {
-    type: Schema.Types.ObjectId,
-    ref: "usuarios"
-  },
   materia: {
     type: Schema.Types.ObjectId,
     ref: "materias",

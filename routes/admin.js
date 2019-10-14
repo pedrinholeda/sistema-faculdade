@@ -3,8 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 require("../models/Curso");
 require("../models/Materia");
+require("../models/Usuario"); // em teste
 const Materia = mongoose.model("materias");
 const Curso = mongoose.model("cursos");
+const Usuario = mongoose.model("usuarios"); // em teste
 const { eAdmin } = require("../helpers/eAdmin"); // pega a função eAdmin dentro do objeto eAdmin
 
 router.get("/", eAdmin, (req, res) => {
@@ -148,12 +150,23 @@ router.get("/materias", eAdmin, (req, res) => {
 router.get("/materias/add", eAdmin, (req, res) => {
   Curso.find()
     .then(cursos => {
-      res.render("admin/addmateria", { cursos: cursos });
+      if (cursos) {
+        Usuario.find().then(usuarios => {
+          res.render("admin/addmateria", {
+            cursos: cursos,
+            usuarios: usuarios
+          });
+        });
+      }
     })
     .catch(err => {
       req.flash("error_msg", "Houve um erro ao carregar o formulario :( ");
       res.redirect("/admin");
     });
+  // Usuario.find().then(usuarios => {
+  //   // em teste
+  //   res.render("admin/addmateria", { usuarios: usuarios }); // em teste
+  // });
 });
 
 router.post("/materias/nova", eAdmin, (req, res) => {
@@ -167,9 +180,11 @@ router.post("/materias/nova", eAdmin, (req, res) => {
   } else {
     const novaMateria = {
       titulo: req.body.titulo,
+      codigo: req.body.codigo,
       descricao: req.body.descricao,
       conteudo: req.body.conteudo,
       curso: req.body.curso,
+      professor: req.body.professor,
       slug: req.body.slug
     };
 
@@ -180,6 +195,7 @@ router.post("/materias/nova", eAdmin, (req, res) => {
         res.redirect("/admin/materias");
       })
       .catch(err => {
+        console.log(err);
         req.flash("error_msg", "Houve um erro durante o salvamento da materia");
         res.redirect("/admin/materias");
       });

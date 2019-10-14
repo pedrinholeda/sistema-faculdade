@@ -30,7 +30,8 @@ const Materia = new Schema({
   },
   professor: {
     type: Schema.Types.ObjectId,
-    ref: "usuarios"
+    ref: "usuarios",
+    required: true
   },
   data: {
     type: Date,
