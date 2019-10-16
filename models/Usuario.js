@@ -1,19 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Nota = new Schema({
-  AV1: {
-    type: String
-  },
-  AV2: {
-    type: String
-  },
-  semestre: {
-    type: String,
-    required: true
-  }
-});
-
 const Usuario = new Schema({
   nome: {
     type: String,
@@ -27,11 +14,20 @@ const Usuario = new Schema({
     type: Number,
     default: 0
   },
+  eProfessor: {
+    type: Number,
+    default: 0
+  },
   senha: {
     type: String,
     required: true
   },
-  notas: [Nota]
+  notas: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "notas"
+    }
+  ]
 });
 
 mongoose.model("usuarios", Usuario);
