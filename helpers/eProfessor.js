@@ -1,5 +1,5 @@
 module.exports = {
-  eAdmin: function(req, res, next) {
+  eProfessor: function(req, res, next) {
     if (req.isAuthenticated() && req.user.eProfessor == 1) {
       return next();
     }
