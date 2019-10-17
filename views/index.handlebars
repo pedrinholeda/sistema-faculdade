@@ -8,6 +8,26 @@
 </div>
 
 <hr>
+{{#if user}}
+<h2>Mural de Postagem: </h2>
+
+{{#each postagens}}
+<div class="card mt-4">
+  <div class="card-body">
+    <h3>{{titulo}}</h3>
+    <p>{{topico}}</p>
+
+    <small>Curso: {{materia.nome}}</small>
+    <br>
+    <small>Data de publicação: {{data}}</small>
+  </div>
+</div>
+
+{{else}}
+<h5>Nenhum conteudo</h5>
+{{/each}}
+</div>
+{{else}}
 <h2>Conteudos Adicionados Recentemente: </h2>
 
 {{#each materias}}
@@ -27,3 +47,12 @@
 <h5>Nenhum conteudo</h5>
 {{/each}}
 </div>
+{{/if}}
+
+{{!-- EM TESTE --- DARK MODE ----  --}}
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.0/lib/darkmode-js.min.js"></script>
+<script src="./script.js"></script>
+<script>
+  new Darkmode().showWidget();
+</script>

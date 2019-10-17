@@ -93,7 +93,7 @@ router.get("/cursos/edit/:id", eAdmin, (req, res) => {
       res.render("admin/editcursos", { curso: curso });
     })
     .catch(err => {
-      req.flash("error_msg", "Esta curso não existe");
+      req.flash("error_msg", "Este curso não existe");
       res.redirect("/admin/cursos");
     });
 });
@@ -125,7 +125,7 @@ router.post("/cursos/edit", eAdmin, (req, res) => {
 router.post("/cursos/deletar", eAdmin, (req, res) => {
   Curso.deleteOne({ _id: req.body.id })
     .then(() => {
-      req.flash("success_msg", "Curso deletada com sucesso!");
+      req.flash("success_msg", "Curso deletado com sucesso!");
       res.redirect("/admin/cursos");
     })
     .catch(err => {
