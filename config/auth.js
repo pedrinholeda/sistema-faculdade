@@ -27,7 +27,8 @@ module.exports = function(passport) {
                 } else {
                   global.adm = false;
                 }
-                if (usuario.eAProfessor == true) {
+
+                if (usuario.eProfessor == true) {
                   global.prof = true;
                 } else {
                   global.prof = false;

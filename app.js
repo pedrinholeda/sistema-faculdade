@@ -37,6 +37,21 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null; // armazena dados do usuario logado
+
+  /// Em Teste ////
+  if (global.adm == true) {
+    res.locals.adm2 = true;
+  } else {
+    res.locals.adm2 = false;
+  }
+
+  if (global.prof == true) {
+    res.locals.prof2 = true;
+  } else {
+    res.locals.prof2 = false;
+  }
+  /////////////////////
+
   next();
 });
 // Body Parser
