@@ -39,16 +39,22 @@ app.use((req, res, next) => {
   res.locals.user = req.user || null; // armazena dados do usuario logado
 
   /// Em Teste ////
-  if (global.adm == true) {
-    res.locals.adm2 = true;
+  if (global.admin == true) {
+    res.locals.adm = true;
   } else {
-    res.locals.adm2 = false;
+    res.locals.adm = false;
   }
 
-  if (global.prof == true) {
-    res.locals.prof2 = true;
+  if (global.professor == true) {
+    res.locals.prof = true;
   } else {
-    res.locals.prof2 = false;
+    res.locals.prof = false;
+  }
+
+  if (global.alun == true) {
+    res.locals.aluno = true;
+  } else {
+    res.locals.aluno = false;
   }
   /////////////////////
 

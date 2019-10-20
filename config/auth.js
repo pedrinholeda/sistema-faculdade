@@ -23,16 +23,22 @@ module.exports = function(passport) {
               if (batem) {
                 ///// em teste /////////
                 if (usuario.eAdmin == true) {
-                  global.adm = true;
+                  global.admin = true;
                 } else {
-                  global.adm = false;
+                  global.admin = false;
                 }
 
                 if (usuario.eProfessor == true) {
-                  global.prof = true;
+                  global.professor = true;
                 } else {
-                  global.prof = false;
+                  global.professor = false;
                 }
+                if ((usuario.eAdmin, usuario.eProfessor == false)) {
+                  global.alun = true;
+                } else {
+                  global.alun = false;
+                }
+
                 ////////////////////////
                 return done(null, usuario);
               } else {
