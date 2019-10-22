@@ -9,14 +9,14 @@
 
 <hr>
 {{#if user}}
-<h2>Mural de Postagem: </h2>
+<h2 class="display-5">Mural de Postagem <i class="fas fa-mail-bulk"></i> </h2>
 
 {{#each postagens}}
 <div class="card mt-4">
   <div class="card-body">
-    <h3>{{titulo}}</h3>
+    <h3><i class="far fa-bell"></i> {{titulo}}</i></h3>
     <p>{{conteudo}}</p>
-    <small>Curso: {{materia.titulo}}</small>
+    <small>Materia: {{materia._id}}</small>
     <br>
     <small>Data de publicação: {{date}}</small>
   </div>

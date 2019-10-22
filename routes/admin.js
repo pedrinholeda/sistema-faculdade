@@ -207,7 +207,7 @@ router.get("/materias/edit/:id", eAdmin, (req, res) => {
     .then(materia => {
       Curso.find()
         .then(cursos => {
-          Usuario.find().then(usuarios => {
+          Usuario.find({ eProfessor: true }).then(usuarios => {
             res.render("admin/editmaterias", {
               cursos: cursos,
               materia: materia,

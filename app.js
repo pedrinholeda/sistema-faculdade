@@ -98,8 +98,8 @@ if (!usuarios) {
 } else {
   app.get("/", (req, res) => {
     Postagem.find()
-      .populate("postagem")
-      .sort({ data: "desc" })
+      .populate("materias")
+      .sort({ date: "desc" })
       .then(postagens => {
         Materia.find().then(materias => {
           res.render("index", {
