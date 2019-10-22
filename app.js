@@ -11,6 +11,8 @@ const session = require("express-session");
 const flash = require("connect-flash");
 require("./models/Materia");
 const Materia = mongoose.model("materias");
+require("./models/Postagem");
+const Postagem = mongoose.model("postagens");
 require("./models/Curso");
 const Curso = mongoose.model("cursos");
 const usuarios = require("./routes/usuario");
@@ -80,18 +82,38 @@ mongoose
 app.use(express.static(path.join(__dirname, "public")));
 
 //rotas
-app.get("/", (req, res) => {
-  Materia.find()
-    .populate("curso")
-    .sort({ data: "desc" })
-    .then(materias => {
-      res.render("index", { materias: materias });
-    })
-    .catch(err => {
-      req.flash("error_msg", "Houve um erro interno");
-      res.redirect("/404");
-    });
-});
+if (!usuarios) {
+  app.get("/", (req, res) => {
+    Materia.find()
+      .populate("curso")
+      .sort({ data: "desc" })
+      .then(materias => {
+        res.render("index", { materias: materias });
+      })
+      .catch(err => {
+        req.flash("error_msg", "Houve um erro interno");
+        res.redirect("/404");
+      });
+  });
+} else {
+  app.get("/", (req, res) => {
+    Postagem.find()
+      .populate("postagem")
+      .sort({ data: "desc" })
+      .then(postagens => {
+        Materia.find().then(materias => {
+          res.render("index", {
+            postagens: postagens,
+            materias: materias
+          });
+        });
+      })
+      .catch(err => {
+        req.flash("error_msg", "Houve um erro interno");
+        res.redirect("/404");
+      });
+  });
+}
 
 app.get("/materia/:slug", (req, res) => {
   Materia.findOne({ slug: req.params.slug })

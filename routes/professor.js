@@ -46,21 +46,21 @@ router.post("/postagens/nova", eProfessor, (req, res) => {
     erros.push({ texto: "Titulo inválido" });
   }
 
-  if (
-    !req.body.slug ||
-    typeof req.body.slug == undefined ||
-    req.body.slug == null
-  ) {
-    erros.push({ texto: "Slug inválido" });
-  }
+  // if (
+  //   !req.body.slug ||
+  //   typeof req.body.slug == undefined ||
+  //   req.body.slug == null
+  // ) {
+  //   erros.push({ texto: "Slug inválido" });
+  // }
 
-  if (
-    !req.body.topico ||
-    typeof req.body.topico == undefined ||
-    req.body.topico == null
-  ) {
-    erros.push({ texto: "Topico inválida" });
-  }
+  // if (
+  //   !req.body.topico ||
+  //   typeof req.body.topico == undefined ||
+  //   req.body.topico == null
+  // ) {
+  //   erros.push({ texto: "Topico inválida" });
+  // }
 
   if (req.body.titulo.length < 2) {
     erros.push({ texto: "O Nome do Titulo é muito pequeno" });
@@ -71,8 +71,6 @@ router.post("/postagens/nova", eProfessor, (req, res) => {
   } else {
     const novaPostagem = {
       titulo: req.body.titulo,
-      slug: req.body.slug,
-      topico: req.body.topico,
       conteudo: req.body.conteudo,
       materia: req.body.materia
     };
@@ -112,8 +110,6 @@ router.post("/postagens/edit", eProfessor, (req, res) => {
   Postagem.findOne({ _id: req.body.id })
     .then(postagem => {
       postagem.titulo = req.body.titulo;
-      postagem.slug = req.body.slug;
-      postagem.topico = req.body.topico;
       postagem.conteudo = req.body.conteudo;
       postagem.materia = req.body.materia;
 

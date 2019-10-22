@@ -151,7 +151,7 @@ router.get("/materias/add", eAdmin, (req, res) => {
   Curso.find()
     .then(cursos => {
       if (cursos) {
-        Usuario.find().then(usuarios => {
+        Usuario.find({ eProfessor: true }).then(usuarios => {
           res.render("admin/addmateria", {
             cursos: cursos,
             usuarios: usuarios
@@ -236,6 +236,7 @@ router.post("/materia/edit", eAdmin, (req, res) => {
       materia.titulo = req.body.titulo;
       materia.slug = req.body.slug;
       materia.descricao = req.body.descricao;
+      materia.professor = req.body.professor;
       materia.conteudo = req.body.conteudo;
       materia.curso = req.body.curso;
 

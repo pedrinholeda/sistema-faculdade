@@ -9,12 +9,8 @@
       <input type="hidden" name="id" value="{{postagem.id}}">
       <label for="titulo">Título: </label>
       <input type="text" name="titulo" class="form-control" value="{{postagem.titulo}}">
-      <label for="slug">Slug: </label>
-      <input type="text" name="slug" class="form-control" value="{{postagem.slug}}">
-      <label for="topico">topico: </label>
-      <input type="text" name="topico" class="form-control" value="{{postagem.topico}}">
       <label for="conteudo">Conteúdo: </label>
-      <textarea name="conteudo" class="form-control" value="{{postagem.conteudo}}"></textarea>
+      <textarea name="conteudo" class="form-control">{{postagem.conteudo}}</textarea>
       <label for="materia">materia: </label>
       <select name="materia" class="custom-select">
         {{#each materias}}

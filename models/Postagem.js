@@ -8,14 +8,6 @@ const Postagem = new Schema({
     type: String,
     require: true
   },
-  slug: {
-    type: String,
-    require: true
-  },
-  topico: {
-    type: String,
-    required: true
-  },
   conteudo: {
     type: String,
     required: true
