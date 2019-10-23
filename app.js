@@ -141,6 +141,18 @@ app.get("/cursos", (req, res) => {
       res.redirect("/");
     });
 });
+app.get("/postagens", (req, res) => {
+  Postagem.find()
+    .populate("postagens")
+    .sort({ date: "desc" })
+    .then(postagens => {
+      res.render("postagem/index", { postagens: postagens });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Houve um erro interno ao listar as postagens");
+      res.redirect("/");
+    });
+});
 
 app.get("/cursos/:slug", (req, res) => {
   Curso.findOne({ slug: req.params.slug })
