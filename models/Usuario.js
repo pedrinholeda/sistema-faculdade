@@ -8,7 +8,9 @@ const Usuario = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    lowercase: true
   },
   eAdmin: {
     type: Number,
@@ -21,6 +23,14 @@ const Usuario = new Schema({
   senha: {
     type: String,
     required: true
+  },
+  passwordResetToken: {
+    type: String,
+    select: false
+  },
+  passwordResetExpires: {
+    type: Date,
+    select: false
   },
   notas: [
     {
