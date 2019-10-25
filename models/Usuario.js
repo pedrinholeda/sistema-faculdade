@@ -1,6 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const Nota = new Schema({
+  av1: {
+    type: Number
+  },
+  av2: {
+    type: Number
+  },
+  materia: {
+    type: Schema.Types.ObjectId,
+    ref: "materias"
+  },
+  semestre: {
+    type: String
+  }
+});
+
 const Usuario = new Schema({
   nome: {
     type: String,
@@ -32,12 +48,7 @@ const Usuario = new Schema({
     type: Date,
     select: false
   },
-  notas: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "notas"
-    }
-  ]
+  notas: [Nota]
 });
 
 mongoose.model("usuarios", Usuario);

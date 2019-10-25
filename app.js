@@ -13,6 +13,8 @@ require("./models/Materia");
 const Materia = mongoose.model("materias");
 require("./models/Postagem");
 const Postagem = mongoose.model("postagens");
+require("./models/Usuario");
+const Usuario = mongoose.model("usuarios");
 require("./models/Curso");
 const Curso = mongoose.model("cursos");
 const usuarios = require("./routes/usuario");
@@ -190,6 +192,24 @@ app.get("/404", (req, res) => {
 app.get("/post", (req, res) => {
   res.send("Lista de Post");
 });
+
+//////////////Usar para cadatro///////////////
+app.get("/teste", (req, res) => {
+  const user = "5daf5005ccf69a138f339d00";
+
+  Usuario.findOne({ _id: user }).then(usuarios => {
+    usuarios.notas.push({
+      av1: 8,
+      av2: 6,
+      materias: "5daf578db1d9661589987b38",
+      semestre: "2019.2"
+    });
+    usuarios.save().then(() => {
+      res.send({ usuarios });
+    });
+  });
+});
+////////////////////////////////////////////////
 
 app.use("/admin", admin);
 app.use("/professor", professor);

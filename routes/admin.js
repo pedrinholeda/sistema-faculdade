@@ -267,4 +267,44 @@ router.get("/materias/deletar/:id", eAdmin, (req, res) => {
     });
 });
 
+// //rota para mostrar ao professor suas disciplinas
+// router.get("/:disciplinaId", async (req, res) => {
+//   const professor = req.params.disciplinaId;
+//   try {
+//     const disciplina = await Disciplina.find({ professor });
+//     return res.send({ disciplina });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(400).send({ error: "Error, loading disciplina" });
+//   }
+// });
+
+//rota para validar e cadastrar alunos em uma materia
+router.post("/materias/add-aluno", eAdmin, async (req, res) => {
+  Materia.findOne({ _id: req.body.id }).then(materias => {
+    const alun = req.body.matricula;
+
+    const erros = [];
+    for (var i = 0; i < materia.matriculados.length; i++) {
+      if (alun == materia.matriculados[i].user) {
+        erros.push({ texto: "Aluno ja matriculado" });
+        break;
+      }
+    }
+
+    if (erros.length > 0) {
+      req.flash("error_msg", "Aluno ja matriculado");
+      res.redirect("/admin/materias");
+    } else {
+      materia.matriculados.push({
+        user: alun
+      });
+      materia.save().then(() => {
+        req.flash("success_msg", "Aluno matriculado com sucesso");
+        res.redirect("/admin");
+      });
+    }
+  });
+});
+
 module.exports = router;
