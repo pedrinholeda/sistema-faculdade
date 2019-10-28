@@ -4,7 +4,7 @@
 {{/each}}
 
 <table class="table">
-  <thead class="blue-gradient">
+  <thead class="table-primary">
     <tr>
       <th scope="col">Codigo</th>
       <th scope="col">Nome</th>
@@ -18,8 +18,12 @@
       <th scope="row">{{codigo}}</th>
       <td>{{titulo}}</td>
       <td>{{_id}}</td>
-      <td><button class="btn btn-success mt-2" type="submit">
-          <i class="far fa-check-circle"> Lançar Nota</i></td>
+      <td><a href="/professor/materias/notas/edit/{{_id}}">
+          <button class="btn btn-secondary">
+            <i class="far fa-edit"></i>
+            Notas
+          </button>
+        </a></td>
     </tr>
     {{else}}
     <p>Nenhuma materias registrada!</p>

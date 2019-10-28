@@ -146,7 +146,7 @@ router.post("/postagens/deletar", eProfessor, (req, res) => {
 router.get("/view-notas", eProfessor, (req, res) => {
   Materia.find()
     .populate("curso")
-    .sort({ data: "desc" })
+    .sort({ codigo: "desc" })
     .then(materias => {
       res.render("professor/view-notas", { materias: materias });
     })
