@@ -7,12 +7,12 @@
 <div class="card">
   <div class="card-body">
     <h4>Adicionar alunos:</h4>
-    <form action="/materias/add-aluno" method="POST">
+    <form action="/admin/materias/addaluno" method="POST">
       <input type="hidden" value="{{materia._id}}" name="id">
       <label for="matricula">Alunos: </label>
       <select name="matricula" class="custom-select">
         {{#each usuarios}}
-        <option value="{{_id}}">{{_id}}</option>
+        <option value="{{id}}">{{id}}</option>
         {{else}}
         <option value="0">Nenhum usuario encontrado</option>
         {{/each}}

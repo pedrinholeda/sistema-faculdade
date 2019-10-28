@@ -146,6 +146,18 @@ router.get("/materias", eAdmin, (req, res) => {
       res.redirect("/admin");
     });
 });
+router.get("/alunos-materias", eAdmin, (req, res) => {
+  Materia.find()
+    .populate("curso")
+    .sort({ data: "desc" })
+    .then(materias => {
+      res.render("admin/alunos-materias", { materias: materias });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Houve um erro ao listar as materias");
+      res.redirect("/admin");
+    });
+});
 
 router.get("/materias/add", eAdmin, (req, res) => {
   Curso.find()
@@ -280,9 +292,10 @@ router.get("/materias/deletar/:id", eAdmin, (req, res) => {
 // });
 
 //rota para validar e cadastrar alunos em uma materia
-router.post("/materias/add-aluno", eAdmin, async (req, res) => {
-  Materia.findOne({ _id: req.body.id })
-    .then(materias => {
+
+router.post("/materias/addaluno", eAdmin, async (req, res) => {
+  Materia.findOne({ _id: req.body._id })
+    .then(materia => {
       const alun = req.body.matricula;
 
       const erros = [];
@@ -315,6 +328,31 @@ router.post("/materias/add-aluno", eAdmin, async (req, res) => {
     .catch(err => {
       console.log("err: ", err);
       req.flash("error_msg", "Houve um error ao editar a matricula");
+      res.redirect("/admin");
+    });
+});
+
+router.get("/materias/alunos-materias/:id", eAdmin, (req, res) => {
+  Materia.findOne({ _id: req.params.id })
+    .then(materias => {
+      console.log(req.params.id);
+      Usuario.find(/*{ eAdmin: false }*/)
+        .then(usuarios => {
+          res.render("admin/addaluno", {
+            usuarios: usuarios,
+            materias: materias
+          });
+        })
+        .catch(err => {
+          req.flash("error_msg", "Houve error ao listar os alunos");
+          res.redirect("/admin");
+        });
+    })
+    .catch(err => {
+      req.flash(
+        "error_msg",
+        "Houve error ao carregar o formulario de matricula"
+      );
       res.redirect("/admin");
     });
 });
