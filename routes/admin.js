@@ -293,54 +293,14 @@ router.get("/materias/deletar/:id", eAdmin, (req, res) => {
 
 //rota para validar e cadastrar alunos em uma materia
 
-router.post("/materias/addaluno", eAdmin, async (req, res) => {
-  Materia.findOne({ _id: req.body._id })
-    .then(materia => {
-      const alun = req.body.matricula;
-
-      const erros = [];
-      for (var i = 0; i < materia.matriculados.length; i++) {
-        if (alun == materia.matriculados[i].user) {
-          erros.push({ texto: "Aluno ja matriculado" });
-          break;
-        }
-      }
-
-      if (erros.length > 0) {
-        req.flash("error_msg", "Aluno ja matriculado");
-        res.redirect("/admin/materias");
-      } else {
-        materia.matriculados.push({
-          user: alun
-        });
-        materia
-          .save()
-          .then(() => {
-            req.flash("success_msg", "Aluno matriculado com sucesso");
-            res.redirect("/admin");
-          })
-          .catch(err => {
-            req.flash("error_msg", "Houve erro ao salvar a matricula");
-            res.redirect("/admin");
-          });
-      }
-    })
-    .catch(err => {
-      console.log("err: ", err);
-      req.flash("error_msg", "Houve um error ao editar a matricula");
-      res.redirect("/admin");
-    });
-});
-
 router.get("/materias/alunos-materias/:id", eAdmin, (req, res) => {
   Materia.findOne({ _id: req.params.id })
-    .then(materias => {
-      console.log(req.params.id);
-      Usuario.find(/*{ eAdmin: false }*/)
+    .then(materia => {
+      Usuario.find({ eAdmin: false, eProfessor: false })
         .then(usuarios => {
           res.render("admin/addaluno", {
             usuarios: usuarios,
-            materias: materias
+            materia: materia
           });
         })
         .catch(err => {
@@ -354,6 +314,46 @@ router.get("/materias/alunos-materias/:id", eAdmin, (req, res) => {
         "Houve error ao carregar o formulario de matricula"
       );
       res.redirect("/admin");
+    });
+});
+
+router.post("/materias/addaluno", eAdmin, async (req, res) => {
+  Materia.findOne({ _id: req.body.id })
+    .then(materia => {
+      const alun = req.body.matricula;
+      //const matricula = disciplina.matriculados;
+      const erros = [];
+      for (var i = 0; i < materia.matriculados.length; i++) {
+        if (alun == materia.matriculados[i].user) {
+          erros.push({ texto: "Aluno ja matriculado" });
+          break;
+        }
+      }
+      if (erros.length > 0) {
+        req.flash("error_msg", "Aluno ja matriculado");
+        res.redirect("/admin/alunos-materias");
+      } else {
+        //salvando aluno na disciplina
+        materia.matriculados.push({
+          user: alun
+        });
+        materia
+          .save()
+          .then(() => {
+            req.flash("success_msg", "Aluno matriculado com sucesso");
+            res.redirect("/admin/alunos-materias");
+          })
+          .catch(err => {
+            req.flash("error_msg", "Houve erro ao salvar a matricula");
+            res.redirect("/admin//admin/alunos-materias");
+          });
+        //res.redirect("/admin/disciplinas");
+      }
+    })
+    .catch(err => {
+      console.log("err: ", err);
+      req.flash("error_msg", "Houve um error ao editar a matricula");
+      res.redirect("/admin/alunos-materias");
     });
 });
 

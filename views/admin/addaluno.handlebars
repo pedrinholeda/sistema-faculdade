@@ -12,7 +12,7 @@
       <label for="matricula">Alunos: </label>
       <select name="matricula" class="custom-select">
         {{#each usuarios}}
-        <option value="{{id}}">{{id}}</option>
+        <option value="{{_id}}">{{_id}}</option>
         {{else}}
         <option value="0">Nenhum usuario encontrado</option>
         {{/each}}
