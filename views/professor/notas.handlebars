@@ -1,0 +1,46 @@
+<div class="jumbotron">
+  <center>
+    <h2><i class="fas fa-edit"></i> Lançamento de notas</h2>
+  </center>
+
+  <table class="table table-striped table-bordered mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">
+          <center>
+            <h4>Alunos</h4>
+          </center>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each usuario}}
+      <tr>
+        <td>
+          <form action="/professor/notas/matricula/{{_id}}" method="POST">
+            <label for="nome" class="form-control"><strong> {{this.nome}}</strong></label><br>
+            <label for="matricula" class="form-control"><strong>{{id}}</strong></label><br>
+            <input type="hidden" name="matricula" value="{{id}}">
+            <input type="number" class="form-control" name="nota" placeholder="Nota" required><br>
+            <select name="semestre" class="custom-select form-control">
+              <option value="2/2019">2/2019</option>
+              <option value="1/2020">1/2020</option>
+              <option value="2/2020">2/2020</option>
+              <option value="1/2021">1/2021</option>
+              <option value="2/2021">2/2021</option>
+            </select>
+            {{#each ../discID}}
+            <input type="hidden" name="disciplina" value="{{text}}">
+            {{/each}}
+            <button class="btn btn-success mt-2" type="submit">
+              <i class="far fa-check-circle"> Salvar</i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {{else}}
+      <h2>Nenhum aluno encontrado</h2>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
