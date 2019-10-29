@@ -215,7 +215,7 @@ router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
   } else {
     await Materia.findOne({ _id: materia })
       .then(materia => {
-        nome = materia.nome;
+        nome = materia.titulo;
       })
       .catch(err => {
         req.flash(
@@ -225,25 +225,24 @@ router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
         res.redirect("/professor/view-notas");
       });
 
-    const nameDIs = nome;
-
     //Salvar nota do aluno
     Usuario.findOne({ _id: matricula }).then(usuario => {
       usuario.notas.push({
         nota: nota,
-        materia: nameDIs,
+        materia: nome,
         semestre: semestre
       });
       usuario
         .save()
         .then(() => {
-          res.redirect("/professor/");
+          res.redirect("/professor");
         })
         .catch(err => {
-          console.log("error ao adicionar disciplina ao aluno: ", err);
-          res.redirect("/professor/");
+          console.log("error ao lançar notas: ", err);
+          res.redirect("/professor/view-notas");
         });
     });
+    //FInalizando Salvar nota do aluno
   }
 });
 
