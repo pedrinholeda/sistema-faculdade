@@ -16,7 +16,7 @@ router.get("/", eProfessor, (req, res) => {
   res.render("professor/index");
 });
 
-// Fazer Postagens no Mural
+// Main de Postagem (Lista de Postagem)
 router.get("/postagens", eProfessor, (req, res) => {
   Postagem.find()
     .sort({ date: "desc" })
@@ -29,6 +29,7 @@ router.get("/postagens", eProfessor, (req, res) => {
     });
 });
 
+//Rota para renderizar View de Add Postagem
 router.get("/postagens/add", eProfessor, (req, res) => {
   Materia.find().then(materias => {
     res.render("professor/addpostagem", {
@@ -37,6 +38,7 @@ router.get("/postagens/add", eProfessor, (req, res) => {
   });
 });
 
+//Rota para realizar Postagem, com Validação por titulo
 router.post("/postagens/nova", eProfessor, (req, res) => {
   var erros = [];
   if (
@@ -46,23 +48,6 @@ router.post("/postagens/nova", eProfessor, (req, res) => {
   ) {
     erros.push({ texto: "Titulo inválido" });
   }
-
-  // if (
-  //   !req.body.slug ||
-  //   typeof req.body.slug == undefined ||
-  //   req.body.slug == null
-  // ) {
-  //   erros.push({ texto: "Slug inválido" });
-  // }
-
-  // if (
-  //   !req.body.topico ||
-  //   typeof req.body.topico == undefined ||
-  //   req.body.topico == null
-  // ) {
-  //   erros.push({ texto: "Topico inválida" });
-  // }
-
   if (req.body.titulo.length < 2) {
     erros.push({ texto: "O Nome do Titulo é muito pequeno" });
   }
@@ -75,6 +60,7 @@ router.post("/postagens/nova", eProfessor, (req, res) => {
       conteudo: req.body.conteudo,
       materia: req.body.materia
     };
+    //Cria um Nova Postagem com o Conteudo da Variavel auxiliar NovaPostagem
     new Postagem(novaPostagem)
       .save()
       .then(() => {
@@ -91,6 +77,7 @@ router.post("/postagens/nova", eProfessor, (req, res) => {
   }
 });
 
+//Rota de Edição de Postagem - View (Passando id da postagem editada por parametro)
 router.get("/postagens/edit/:id", eProfessor, (req, res) => {
   Postagem.findOne({ _id: req.params.id })
     .then(postagem => {
@@ -106,7 +93,7 @@ router.get("/postagens/edit/:id", eProfessor, (req, res) => {
       res.redirect("/professor/postagens");
     });
 });
-
+//Rota de Edição de Postagem - Logica
 router.post("/postagens/edit", eProfessor, (req, res) => {
   Postagem.findOne({ _id: req.body.id })
     .then(postagem => {
@@ -131,6 +118,7 @@ router.post("/postagens/edit", eProfessor, (req, res) => {
     });
 });
 
+//Rota de Deletar Postagem
 router.post("/postagens/deletar", eProfessor, (req, res) => {
   Postagem.deleteOne({ _id: req.body.id })
     .then(() => {
@@ -143,8 +131,10 @@ router.post("/postagens/deletar", eProfessor, (req, res) => {
     });
 });
 
+//Rota que Lista Materias Disponiveis Para Lançamento de Notas
 router.get("/view-notas", eProfessor, (req, res) => {
-  Materia.find()
+  const professor = req.user.id; //variavel para guardar id do professor
+  Materia.find({ professor }) //comparando campo do banco com variavel({professor:professor})
     .populate("curso")
     .sort({ codigo: "desc" })
     .then(materias => {
@@ -156,23 +146,21 @@ router.get("/view-notas", eProfessor, (req, res) => {
     });
 });
 
-//rota view materia/edit
+//Rota que Verifica Alunos Matriculados na Materia e Lista Eles
 router.get("/materias/notas/edit/:id", eProfessor, async (req, res) => {
   Materia.findOne({ _id: req.params.id })
     .then(materia => {
-      const matricula = []; //array de alunos
-      //for para colocar os alunos matriculados dentro de matricula
+      const matricula = []; //array de Alunos
+      //for para colocar os alunos matriculados dentro dea variavel auxiliar matricula.
       for (var i = 0; i < materia.matriculados.length; i++) {
         matricula.push(materia.matriculados[i].user);
       }
 
-      //global.matri = disciplina._id;
-      const discID = [];
+      const discID = []; //Variavel auxiliar para guardar o id da materia
 
       discID.push({ text: materia._id });
       Usuario.find({ _id: matricula })
         .then(usuario => {
-          //return res.send({ usuario });
           res.render("professor/notas", {
             usuario: usuario,
             discID: discID

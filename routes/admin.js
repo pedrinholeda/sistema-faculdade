@@ -17,6 +17,7 @@ router.get("/post", eAdmin, (req, res) => {
   res.send("Pagina de post");
 });
 
+//Rota que lista os cursos Cadastrados na Aplicação
 router.get("/cursos", eAdmin, (req, res) => {
   Curso.find()
     .sort({ date: "desc" })
@@ -29,10 +30,12 @@ router.get("/cursos", eAdmin, (req, res) => {
     });
 });
 
+//Rota que renderiza View de Add Curso
 router.get("/cursos/add", eAdmin, (req, res) => {
   res.render("admin/addcursos");
 });
 
+//Rota de Logica de Add Curso (Com Validação)
 router.post("/cursos/nova", eAdmin, (req, res) => {
   var erros = [];
   if (
@@ -87,6 +90,7 @@ router.post("/cursos/nova", eAdmin, (req, res) => {
   }
 });
 
+//Rota de View de Edit Curso (passando id por parametro)
 router.get("/cursos/edit/:id", eAdmin, (req, res) => {
   Curso.findOne({ _id: req.params.id })
     .then(curso => {
@@ -98,6 +102,7 @@ router.get("/cursos/edit/:id", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Logica de Edit Curso (passando id por parametro)
 router.post("/cursos/edit", eAdmin, (req, res) => {
   Curso.findOne({ _id: req.body.id })
     .then(curso => {
@@ -122,6 +127,7 @@ router.post("/cursos/edit", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Deletar Curso
 router.post("/cursos/deletar", eAdmin, (req, res) => {
   Curso.deleteOne({ _id: req.body.id })
     .then(() => {
@@ -134,6 +140,7 @@ router.post("/cursos/deletar", eAdmin, (req, res) => {
     });
 });
 
+//Rota que lista os Materias Cadastradas na Aplicação
 router.get("/materias", eAdmin, (req, res) => {
   Materia.find()
     .populate("curso")
@@ -146,19 +153,8 @@ router.get("/materias", eAdmin, (req, res) => {
       res.redirect("/admin");
     });
 });
-router.get("/alunos-materias", eAdmin, (req, res) => {
-  Materia.find()
-    .populate("curso")
-    .sort({ data: "desc" })
-    .then(materias => {
-      res.render("admin/alunos-materias", { materias: materias });
-    })
-    .catch(err => {
-      req.flash("error_msg", "Houve um erro ao listar as materias");
-      res.redirect("/admin");
-    });
-});
 
+//Rota de View para Add Materias
 router.get("/materias/add", eAdmin, (req, res) => {
   Curso.find()
     .then(cursos => {
@@ -181,6 +177,7 @@ router.get("/materias/add", eAdmin, (req, res) => {
   // });
 });
 
+//Rota de Logica para Add Materias (pegando id por parametro)
 router.post("/materias/nova", eAdmin, (req, res) => {
   var erros = [];
   if (req.body.curso == "0") {
@@ -214,6 +211,7 @@ router.post("/materias/nova", eAdmin, (req, res) => {
   }
 });
 
+//Rota de View para Edit Materia (pegando id por parametro)
 router.get("/materias/edit/:id", eAdmin, (req, res) => {
   Materia.findOne({ _id: req.params.id })
     .then(materia => {
@@ -242,6 +240,7 @@ router.get("/materias/edit/:id", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Logica para Edit Materias
 router.post("/materia/edit", eAdmin, (req, res) => {
   Materia.findOne({ _id: req.body.id })
     .then(materia => {
@@ -267,6 +266,7 @@ router.post("/materia/edit", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Deletar Materia
 router.get("/materias/deletar/:id", eAdmin, (req, res) => {
   Materia.deleteOne({ _id: req.params.id })
     .then(() => {
@@ -291,8 +291,21 @@ router.get("/materias/deletar/:id", eAdmin, (req, res) => {
 //   }
 // });
 
-//rota para validar e cadastrar alunos em uma materia
+// Rota de View de Materias Disponiveis para matricular Alunos
+router.get("/alunos-materias", eAdmin, (req, res) => {
+  Materia.find()
+    .populate("curso")
+    .sort({ data: "desc" })
+    .then(materias => {
+      res.render("admin/alunos-materias", { materias: materias });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Houve um erro ao listar as materias");
+      res.redirect("/admin");
+    });
+});
 
+//Rota para validar e cadastrar alunos em uma materia
 router.get("/materias/alunos-materias/:id", eAdmin, (req, res) => {
   Materia.findOne({ _id: req.params.id })
     .then(materia => {
@@ -317,6 +330,7 @@ router.get("/materias/alunos-materias/:id", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Logica para add aluno
 router.post("/materias/addaluno", eAdmin, async (req, res) => {
   Materia.findOne({ _id: req.body.id })
     .then(materia => {
