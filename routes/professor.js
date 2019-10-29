@@ -93,6 +93,7 @@ router.get("/postagens/edit/:id", eProfessor, (req, res) => {
       res.redirect("/professor/postagens");
     });
 });
+
 //Rota de Edição de Postagem - Logica
 router.post("/postagens/edit", eProfessor, (req, res) => {
   Postagem.findOne({ _id: req.body.id })
@@ -180,6 +181,70 @@ router.get("/materias/notas/edit/:id", eProfessor, async (req, res) => {
       );
       res.redirect("/professor");
     });
+});
+
+router.post("/notas/edit/:id", eProfessor, (req, res) => {
+  //const resultado = req.params.id;
+  const matricula = req.body.matricula;
+  try {
+    console.log("nota: ", matricula);
+  } catch (err) {
+    console.log("err: ", err);
+  }
+  //res.send({ resultado });
+});
+
+router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
+  //const nome = req.body.nome;
+  const matricula = req.body.matricula;
+  const nota = req.body.nota;
+  const semestre = req.body.semestre;
+  const materia = req.body.materia;
+  var nome;
+  const error = [];
+
+  if (nota < 0) {
+    error.push({ texto: "Nota invalida: Menor que 0" });
+  }
+  if (nota > 10) {
+    error.push({ texto: "Nota invalida: Maior que 10" });
+  }
+  if (error.length > 0) {
+    req.flash("error_msg", "Nota invalida");
+    res.redirect("/professor");
+  } else {
+    await Materia.findOne({ _id: materia })
+      .then(materia => {
+        nome = materia.nome;
+      })
+      .catch(err => {
+        req.flash(
+          "error_msg",
+          "Houve error interno, por favor tente novamente!"
+        );
+        res.redirect("/professor/view-notas");
+      });
+
+    const nameDIs = nome;
+
+    //Salvar nota do aluno
+    Usuario.findOne({ _id: matricula }).then(usuario => {
+      usuario.notas.push({
+        nota: nota,
+        materia: nameDIs,
+        semestre: semestre
+      });
+      usuario
+        .save()
+        .then(() => {
+          res.redirect("/professor/");
+        })
+        .catch(err => {
+          console.log("error ao adicionar disciplina ao aluno: ", err);
+          res.redirect("/professor/");
+        });
+    });
+  }
 });
 
 module.exports = router;

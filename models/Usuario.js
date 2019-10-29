@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Nota = new Schema({
-  av1: {
-    type: Number
-  },
-  av2: {
+  nota: {
     type: Number
   },
   materia: {
