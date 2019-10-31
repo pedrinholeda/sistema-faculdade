@@ -183,17 +183,6 @@ router.get("/materias/notas/edit/:id", eProfessor, async (req, res) => {
     });
 });
 
-router.post("/notas/edit/:id", eProfessor, (req, res) => {
-  //const resultado = req.params.id;
-  const matricula = req.body.matricula;
-  try {
-    console.log("nota: ", matricula);
-  } catch (err) {
-    console.log("err: ", err);
-  }
-  //res.send({ resultado });
-});
-
 router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
   //const nome = req.body.nome;
   const matricula = req.body.matricula;
@@ -210,8 +199,8 @@ router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
     error.push({ texto: "Nota invalida: Maior que 10" });
   }
   if (error.length > 0) {
-    req.flash("error_msg", "Nota invalida");
-    res.redirect("/professor");
+    req.flash("error_msg", "Error: A Nota inserida é invalida");
+    res.redirect("/professor/view-notas");
   } else {
     await Materia.findOne({ _id: materia })
       .then(materia => {
@@ -225,23 +214,55 @@ router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
         res.redirect("/professor/view-notas");
       });
 
-    //Salvar nota do aluno
-    Usuario.findOne({ _id: matricula }).then(usuario => {
-      usuario.notas.push({
-        nota: nota,
-        materia: nome,
-        semestre: semestre
-      });
-      usuario
-        .save()
-        .then(() => {
-          res.redirect("/professor");
-        })
-        .catch(err => {
-          console.log("error ao lançar notas: ", err);
+    //Rota para salvar a nota do aluno
+    var edit = 0; //variavel para verificar se a nota ja foi lançada
+    Usuario.findOne({ _id: matricula })
+      .then(usuario => {
+        for (var i = 0; i < usuario.notas.length; i++) {
+          //Laço para percorrer notas de alunos
+          if (
+            usuario.notas[i].materia == nome &&
+            usuario.notas[i].semestre == semestre
+          ) {
+            usuario.notas[i].nota = nota;
+            edit++;
+            break;
+          }
+        }
+        if (edit > 0) {
+          usuario
+            .save()
+            .then(() => {
+              res.redirect("/professor/view-notas");
+            })
+            .catch(err => {
+              console.log("error ao adicionar disciplina ao aluno: ", err);
+              res.redirect("/professor/view-notas");
+            });
+        } else {
+          req.flash("error_msg", "O aluno não esta matriculado nesse semestre");
           res.redirect("/professor/view-notas");
-        });
-    });
+        }
+      })
+      .catch(err => {
+        req.flash("error_msg", "Houve error");
+        res.redirect("/professor/view-notas");
+
+        // usuario.notas.push({
+        //   nota: nota,
+        //   materia: nome,
+        //   semestre: semestre
+        // });
+        // usuario
+        //   .save()
+        //   .then(() => {
+        //     res.redirect("/professor");
+        //   })
+        // .catch(err => {
+        //   console.log("error ao lançar notas: ", err);
+        //   res.redirect("/professor/view-notas");
+        // });
+      });
     //FInalizando Salvar nota do aluno
   }
 });

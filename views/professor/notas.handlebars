@@ -2,6 +2,14 @@
   <h1 class="display-3"> Lançamento de Notas <i class="fas fa-edit"></i> </h1>
   <p>Tabela com alunos matriculados nesta materia</p>
 </div>
+<br>
+<br>
+
+
+<div class="col-12 text-center ">
+  <h6 class="display-5">{{materia.titulo}}</h6>
+</div>
+
 
 
 <table class="table table-striped table-bordered table-hover table-dark">
@@ -22,8 +30,6 @@
       <th scope="col">
         <center>Salvar</center>
       </th>
-
-
     </tr>
   </thead>
   <tbody>
@@ -35,8 +41,6 @@
         <input type="hidden" name="matricula" value="{{id}}">
         <td><input type="number" class="form-control" name="nota" placeholder="Nota" required></td>
         <td><select name="semestre" class="custom-select form-control">
-            <option value="2019.1">2019.1</option>
-            <option value="2019.2">2019.2</option>
             <option value="2020.1">2020.1</option>
             <option value="2020.2">2020.2</option>
           </select></td>

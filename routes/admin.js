@@ -335,10 +335,14 @@ router.post("/materias/addaluno", eAdmin, async (req, res) => {
   Materia.findOne({ _id: req.body.id })
     .then(materia => {
       const alun = req.body.matricula;
+      const semestre = req.body.semestre;
       //const matricula = disciplina.matriculados;
       const erros = [];
       for (var i = 0; i < materia.matriculados.length; i++) {
-        if (alun == materia.matriculados[i].user) {
+        if (
+          alun == materia.matriculados[i].user &&
+          semestre == materia.matriculados[i].semestre
+        ) {
           erros.push({ texto: "Aluno ja matriculado" });
           break;
         }
@@ -348,8 +352,26 @@ router.post("/materias/addaluno", eAdmin, async (req, res) => {
         res.redirect("/admin/alunos-materias");
       } else {
         //salvando aluno na disciplina
+        const NomeDisc = materia.titulo;
+
+        Usuario.findOne({ _id: alun }).then(usuario => {
+          usuario.notas.push({
+            nota: 0,
+            materia: NomeDisc,
+            semestre: semestre
+          });
+
+          usuario
+            .save()
+            .then(() => {})
+            .catch(err => {
+              console.log("error ao adicionar disciplina ao aluno: ", err);
+              res.redirect("/admin/alunos-materias");
+            });
+        });
         materia.matriculados.push({
-          user: alun
+          user: alun,
+          semestre: semestre
         });
         materia
           .save()
@@ -359,7 +381,7 @@ router.post("/materias/addaluno", eAdmin, async (req, res) => {
           })
           .catch(err => {
             req.flash("error_msg", "Houve erro ao salvar a matricula");
-            res.redirect("/admin//admin/alunos-materias");
+            res.redirect("/admin/alunos-materias");
           });
         //res.redirect("/admin/disciplinas");
       }
