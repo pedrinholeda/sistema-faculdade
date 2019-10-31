@@ -164,7 +164,8 @@ router.get("/materias/notas/edit/:id", eProfessor, async (req, res) => {
         .then(usuario => {
           res.render("professor/notas", {
             usuario: usuario,
-            discID: discID
+            discID: discID,
+            materia: materia
           });
         })
         .catch(err => {

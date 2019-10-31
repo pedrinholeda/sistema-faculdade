@@ -404,4 +404,30 @@ router.post("/reset_password", async (req, res) => {
   }
 });
 
+router.get("/minhas-notas", async (req, res) => {
+  try {
+    const user = req.user.id;
+    Usuario.findOne({ _id: user })
+      .sort({ semestre: "desc" })
+      .then(usuario => {
+        const notafinal = [];
+        for (var i = 0; i < usuario.notas.length; i++) {
+          notafinal.push({
+            nota: usuario.notas[i].nota,
+            materia: usuario.notas[i].materia,
+            semestre: usuario.notas[i].semestre
+          });
+        }
+        res.render("usuarios/notas", { notafinal: notafinal });
+      })
+      .catch(err => {
+        console.log("err: ", err);
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
+  }
+});
+
 module.exports = router;

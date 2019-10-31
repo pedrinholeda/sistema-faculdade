@@ -7,7 +7,7 @@
 
 
 <div class="col-12 text-center ">
-  <h6 class="display-5">{{materia.titulo}}</h6>
+  <h6 class="display-4 mb-4">Disciplina de {{materia.titulo}}</h6>
 </div>
 
 
@@ -39,7 +39,7 @@
         <th scope="row">{{nome}}</th>
         <td><label for="matricula" class="form-control"><strong>{{id}}</strong></label></td>
         <input type="hidden" name="matricula" value="{{id}}">
-        <td><input type="number" class="form-control" name="nota" placeholder="Nota" required></td>
+        <td><input type="text" class="form-control" name="nota" placeholder="Nota" required></td>
         <td><select name="semestre" class="custom-select form-control">
             <option value="2020.1">2020.1</option>
             <option value="2020.2">2020.2</option>
