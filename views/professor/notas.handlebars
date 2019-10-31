@@ -1,0 +1,58 @@
+<div class="col-12 text-center my-5">
+  <h1 class="display-3"> Lançamento de Notas <i class="fas fa-edit"></i> </h1>
+  <p>Tabela com alunos matriculados nesta materia</p>
+</div>
+
+
+<table class="table table-striped table-bordered table-hover table-dark">
+  <thead class="table-active">
+    <tr>
+      <th scope="col">
+        <center>Nome</center>
+      </th>
+      <th scope="col">
+        <center>Matricula</center>
+      </th>
+      <th scope="col">
+        <center>Nota</center>
+      </th>
+      <th scope="col">
+        <center>Semestre</center>
+      </th>
+      <th scope="col">
+        <center>Salvar</center>
+      </th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    {{#each usuario}}
+    <tr>
+      <form action="/professor/notas/matricula/{{_id}}" method="POST">
+        <th scope="row">{{nome}}</th>
+        <td><label for="matricula" class="form-control"><strong>{{id}}</strong></label></td>
+        <input type="hidden" name="matricula" value="{{id}}">
+        <td><input type="number" class="form-control" name="nota" placeholder="Nota" required></td>
+        <td><select name="semestre" class="custom-select form-control">
+            <option value="2019.1">2019.1</option>
+            <option value="2019.2">2019.2</option>
+            <option value="2020.1">2020.1</option>
+            <option value="2020.2">2020.2</option>
+          </select></td>
+        {{#each ../discID}}
+        <input type="hidden" name="materia" value="{{text}}">
+        {{/each}}
+        <td>
+          <center><button class="btn btn-outline-success" type="submit">
+              <i class="far fa-check-circle"> Salvar</i>
+            </button></center>
+        </td>
+      </form>
+
+    </tr>
+    {{else}}
+    <h2>Nenhum aluno encontrado</h2>
+    {{/each}}
+  </tbody>
+</table>

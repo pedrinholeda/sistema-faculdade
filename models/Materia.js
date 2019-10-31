@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const Alunos = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "usuarios"
+  }
+});
+
 const Materia = new Schema({
   titulo: {
     type: String,
@@ -30,12 +37,14 @@ const Materia = new Schema({
   },
   professor: {
     type: Schema.Types.ObjectId,
-    ref: "usuarios"
+    ref: "usuarios",
+    required: true
   },
   data: {
     type: Date,
     default: Date.now()
-  }
+  },
+  matriculados: [Alunos]
 });
 
 mongoose.model("materias", Materia);

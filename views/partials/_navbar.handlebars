@@ -22,6 +22,8 @@
             Sobre</a>
         </li>
         {{#if user}}
+        {{!-- Lado esquerdo da NavBar --}}
+        {{#if aluno}} {{!--// ainda nao foi criado --}}
         <li class="nav-item dropdown active">
           <a class="nav-link dropdown-toggle" id="navbarDropdownAcademic" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false"><i class="fas fa-book-reader"></i> Acadêmico</a>
@@ -29,10 +31,15 @@
           <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownAcademic">
             <a class="dropdown-item" href="#">Nota das Provas</a>
             <a class="dropdown-item" href="#">Consultar frequência</a>
-            <a class="dropdown-item" href="#">Atendimento</a>
+            <a class="dropdown-item" href="/postagens">Quadro de Postagem</a>
+            {{else}}
+            {{/if}}
             {{else}}
             {{/if}}
       </ul>
+
+      {{!-- Fim do Lado esquerdo da NavBar --}}
+
       <ul class="navbar-nav ml-auto">
         {{#if user}}
         <li class="nav-item dropdown active">
@@ -42,9 +49,23 @@
           <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownUser">
             <a class="dropdown-item" href="#">Minha Conta</a>
             <a class="dropdown-item" href="/usuarios/logout">Sair</a>
+            {{#if adm}}
         <li class="nav-item">
-          <a class="nav-link" href="/admin" tabindex="-1" aria-disabled="true"><i class="fas fa-user-cog"></i></a>
+          <a class="nav-link" href="/admin" tabindex="-1" aria-disabled="true"> Painel<i
+              class="fas fa-user-cog"></i></a>
         </li>
+        {{else}}
+        {{/if}}
+
+        {{#if prof}}
+
+        <li class="nav-item">
+          <a class="nav-link" href="/professor" tabindex="-1" aria-disabled="true"> Painel <i
+              class="fas fa-chalkboard-teacher"></i></a>
+        </li>
+        {{else}}
+        {{/if}}
+
         {{else}}
         <li class="nav-item active">
           <a class="nav-link" href="/usuarios/login" tabindex="-1" aria-disabled="true"><i class="fas fa-user"></i>

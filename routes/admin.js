@@ -3,8 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 require("../models/Curso");
 require("../models/Materia");
+require("../models/Usuario"); // em teste
 const Materia = mongoose.model("materias");
 const Curso = mongoose.model("cursos");
+const Usuario = mongoose.model("usuarios"); // em teste
 const { eAdmin } = require("../helpers/eAdmin"); // pega a função eAdmin dentro do objeto eAdmin
 
 router.get("/", eAdmin, (req, res) => {
@@ -15,6 +17,7 @@ router.get("/post", eAdmin, (req, res) => {
   res.send("Pagina de post");
 });
 
+//Rota que lista os cursos Cadastrados na Aplicação
 router.get("/cursos", eAdmin, (req, res) => {
   Curso.find()
     .sort({ date: "desc" })
@@ -27,10 +30,12 @@ router.get("/cursos", eAdmin, (req, res) => {
     });
 });
 
+//Rota que renderiza View de Add Curso
 router.get("/cursos/add", eAdmin, (req, res) => {
   res.render("admin/addcursos");
 });
 
+//Rota de Logica de Add Curso (Com Validação)
 router.post("/cursos/nova", eAdmin, (req, res) => {
   var erros = [];
   if (
@@ -85,17 +90,19 @@ router.post("/cursos/nova", eAdmin, (req, res) => {
   }
 });
 
+//Rota de View de Edit Curso (passando id por parametro)
 router.get("/cursos/edit/:id", eAdmin, (req, res) => {
   Curso.findOne({ _id: req.params.id })
     .then(curso => {
       res.render("admin/editcursos", { curso: curso });
     })
     .catch(err => {
-      req.flash("error_msg", "Esta curso não existe");
+      req.flash("error_msg", "Este curso não existe");
       res.redirect("/admin/cursos");
     });
 });
 
+//Rota de Logica de Edit Curso (passando id por parametro)
 router.post("/cursos/edit", eAdmin, (req, res) => {
   Curso.findOne({ _id: req.body.id })
     .then(curso => {
@@ -120,10 +127,11 @@ router.post("/cursos/edit", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Deletar Curso
 router.post("/cursos/deletar", eAdmin, (req, res) => {
   Curso.deleteOne({ _id: req.body.id })
     .then(() => {
-      req.flash("success_msg", "Curso deletada com sucesso!");
+      req.flash("success_msg", "Curso deletado com sucesso!");
       res.redirect("/admin/cursos");
     })
     .catch(err => {
@@ -132,6 +140,7 @@ router.post("/cursos/deletar", eAdmin, (req, res) => {
     });
 });
 
+//Rota que lista os Materias Cadastradas na Aplicação
 router.get("/materias", eAdmin, (req, res) => {
   Materia.find()
     .populate("curso")
@@ -145,17 +154,30 @@ router.get("/materias", eAdmin, (req, res) => {
     });
 });
 
+//Rota de View para Add Materias
 router.get("/materias/add", eAdmin, (req, res) => {
   Curso.find()
     .then(cursos => {
-      res.render("admin/addmateria", { cursos: cursos });
+      if (cursos) {
+        Usuario.find({ eProfessor: true }).then(usuarios => {
+          res.render("admin/addmateria", {
+            cursos: cursos,
+            usuarios: usuarios
+          });
+        });
+      }
     })
     .catch(err => {
       req.flash("error_msg", "Houve um erro ao carregar o formulario :( ");
       res.redirect("/admin");
     });
+  // Usuario.find().then(usuarios => {
+  //   // em teste
+  //   res.render("admin/addmateria", { usuarios: usuarios }); // em teste
+  // });
 });
 
+//Rota de Logica para Add Materias (pegando id por parametro)
 router.post("/materias/nova", eAdmin, (req, res) => {
   var erros = [];
   if (req.body.curso == "0") {
@@ -167,9 +189,11 @@ router.post("/materias/nova", eAdmin, (req, res) => {
   } else {
     const novaMateria = {
       titulo: req.body.titulo,
+      codigo: req.body.codigo,
       descricao: req.body.descricao,
       conteudo: req.body.conteudo,
       curso: req.body.curso,
+      professor: req.body.professor,
       slug: req.body.slug
     };
 
@@ -180,22 +204,28 @@ router.post("/materias/nova", eAdmin, (req, res) => {
         res.redirect("/admin/materias");
       })
       .catch(err => {
+        console.log(err);
         req.flash("error_msg", "Houve um erro durante o salvamento da materia");
         res.redirect("/admin/materias");
       });
   }
 });
 
+//Rota de View para Edit Materia (pegando id por parametro)
 router.get("/materias/edit/:id", eAdmin, (req, res) => {
   Materia.findOne({ _id: req.params.id })
     .then(materia => {
       Curso.find()
         .then(cursos => {
-          res.render("admin/editmaterias", {
-            cursos: cursos,
-            materia: materia
+          Usuario.find({ eProfessor: true }).then(usuarios => {
+            res.render("admin/editmaterias", {
+              cursos: cursos,
+              materia: materia,
+              usuarios: usuarios
+            });
           });
         })
+
         .catch(err => {
           req.flash("error_msg", "Houve um erro ao listar as cursos");
           res.redirect("/admin/materias");
@@ -210,12 +240,14 @@ router.get("/materias/edit/:id", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Logica para Edit Materias
 router.post("/materia/edit", eAdmin, (req, res) => {
   Materia.findOne({ _id: req.body.id })
     .then(materia => {
       materia.titulo = req.body.titulo;
       materia.slug = req.body.slug;
       materia.descricao = req.body.descricao;
+      materia.professor = req.body.professor;
       materia.conteudo = req.body.conteudo;
       materia.curso = req.body.curso;
 
@@ -234,8 +266,9 @@ router.post("/materia/edit", eAdmin, (req, res) => {
     });
 });
 
+//Rota de Deletar Materia
 router.get("/materias/deletar/:id", eAdmin, (req, res) => {
-  Materia.remove({ _id: req.params.id })
+  Materia.deleteOne({ _id: req.params.id })
     .then(() => {
       req.flash("success_msg", "Materia deletada com sucesso");
       res.redirect("/admin/materias");
@@ -243,6 +276,98 @@ router.get("/materias/deletar/:id", eAdmin, (req, res) => {
     .catch(err => {
       req.flash("error_msg", "Houve um erro interno");
       res.redirect("/admin/materias");
+    });
+});
+
+// //rota para mostrar ao professor suas disciplinas
+// router.get("/:disciplinaId", async (req, res) => {
+//   const professor = req.params.disciplinaId;
+//   try {
+//     const disciplina = await Disciplina.find({ professor });
+//     return res.send({ disciplina });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(400).send({ error: "Error, loading disciplina" });
+//   }
+// });
+
+// Rota de View de Materias Disponiveis para matricular Alunos
+router.get("/alunos-materias", eAdmin, (req, res) => {
+  Materia.find()
+    .populate("curso")
+    .sort({ data: "desc" })
+    .then(materias => {
+      res.render("admin/alunos-materias", { materias: materias });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Houve um erro ao listar as materias");
+      res.redirect("/admin");
+    });
+});
+
+//Rota para validar e cadastrar alunos em uma materia
+router.get("/materias/alunos-materias/:id", eAdmin, (req, res) => {
+  Materia.findOne({ _id: req.params.id })
+    .then(materia => {
+      Usuario.find({ eAdmin: false, eProfessor: false })
+        .then(usuarios => {
+          res.render("admin/addaluno", {
+            usuarios: usuarios,
+            materia: materia
+          });
+        })
+        .catch(err => {
+          req.flash("error_msg", "Houve error ao listar os alunos");
+          res.redirect("/admin");
+        });
+    })
+    .catch(err => {
+      req.flash(
+        "error_msg",
+        "Houve error ao carregar o formulario de matricula"
+      );
+      res.redirect("/admin");
+    });
+});
+
+//Rota de Logica para add aluno
+router.post("/materias/addaluno", eAdmin, async (req, res) => {
+  Materia.findOne({ _id: req.body.id })
+    .then(materia => {
+      const alun = req.body.matricula;
+      //const matricula = disciplina.matriculados;
+      const erros = [];
+      for (var i = 0; i < materia.matriculados.length; i++) {
+        if (alun == materia.matriculados[i].user) {
+          erros.push({ texto: "Aluno ja matriculado" });
+          break;
+        }
+      }
+      if (erros.length > 0) {
+        req.flash("error_msg", "Aluno ja matriculado");
+        res.redirect("/admin/alunos-materias");
+      } else {
+        //salvando aluno na disciplina
+        materia.matriculados.push({
+          user: alun
+        });
+        materia
+          .save()
+          .then(() => {
+            req.flash("success_msg", "Aluno matriculado com sucesso");
+            res.redirect("/admin/alunos-materias");
+          })
+          .catch(err => {
+            req.flash("error_msg", "Houve erro ao salvar a matricula");
+            res.redirect("/admin//admin/alunos-materias");
+          });
+        //res.redirect("/admin/disciplinas");
+      }
+    })
+    .catch(err => {
+      console.log("err: ", err);
+      req.flash("error_msg", "Houve um error ao editar a matricula");
+      res.redirect("/admin/alunos-materias");
     });
 });
 

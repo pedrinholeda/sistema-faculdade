@@ -11,7 +11,7 @@
     <div class="row mb-5">
       <div class="col-3">
         <nav id="navbarVertical" class="navbar navbar-light bg-light">
-          <a class="navbar-brand" href="#">Facultech <i class="fas fa-code"></i></a>
+          <a class="navbar-brand" id="titulo-side" href="#">Facultech <i class="fas fa-code"></i></a>
           <nav class="nav nav-pills flex-column">
             <a class="nav-link" href="#item1">Item 1</a>
             <nav class="nav nav-pills flex-column">
@@ -187,6 +187,20 @@
       position: relative;
       overflow: auto;
       height: 430px;
+    }
+
+    @media (max-width: 768px) {
+      .scrollspySite {
+        padding-left: 20px;
+        position: relative;
+        overflow: auto;
+        height: 700px;
+      }
+
+      #titulo-side {
+        text-align: justify;
+        font-size: 0.90rem;
+      }
     }
   </style>
 </body>

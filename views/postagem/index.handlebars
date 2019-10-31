@@ -1,0 +1,33 @@
+<div class="col-12 text-center my-5">
+  <h3 class="display-3"> Mural de Avisos <i class="fas fa-code"></i></h3>
+  <p>Instituição de Ensino focada em abordar diversos
+    cursos dentro da área de tecnologia e inovação.</p>
+</div>
+<br>
+
+{{#each postagens}}
+<div class="card border-dark mb-3" class="card">
+  <div class="card-header">
+    <h2 class="card-title">{{titulo}}</h2>
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{conteudo}}</p>
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">{{date}}</small>
+  </div>
+</div>
+<style>
+  .card {
+    margin-bottom: 3cm;
+  }
+
+  .card-header {
+    text-align: center
+  }
+</style>
+
+{{else}}
+
+
+{{/each}}

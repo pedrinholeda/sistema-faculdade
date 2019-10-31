@@ -1,4 +1,3 @@
-<div id="carouselSite" class="carousel slide" data-ride="carousel"></div>
 <div class="jumbotron">
   <h1 class="display-4">Bem-vindo a Facultech <i class="fas fa-code"></i></h1>
   <p class="lead"> Instituição de Tecnologia, desenvolvido com Node.js + Express + MongoDB</p>
@@ -9,6 +8,25 @@
 </div>
 
 <hr>
+{{#if user}}
+<h2 class="display-5">Mural de Postagem <i class="fas fa-mail-bulk"></i> </h2>
+
+{{#each postagens}}
+<div class="card mt-4">
+  <div class="card-body">
+    <h3><i class="far fa-bell"></i> <strong>{{titulo}}</strong></i></h3>
+    <p>{{conteudo}}</p>
+    <small>Materia: {{materia._id}}</small>
+    <br>
+    <small>Data de publicação: {{date}}</small>
+  </div>
+</div>
+
+{{else}}
+<h5>Nenhum conteudo</h5>
+{{/each}}
+
+{{else}}
 <h2>Conteudos Adicionados Recentemente: </h2>
 
 {{#each materias}}
@@ -18,7 +36,7 @@
     <p>{{descricao}}</p>
     <a href="/materia/{{slug}}"><button type="button" class="btn btn-outline-dark">Leia Mais</button></a>
     <hr>
-    <small>Curso: {{curso.nome}}</small>
+    <small>Curso: {{curso._id}}</small>
     <br>
     <small>Data de publicação: {{data}}</small>
   </div>
@@ -28,3 +46,16 @@
 <h5>Nenhum conteudo</h5>
 {{/each}}
 </div>
+{{/if}}
+
+{{!-- EM TESTE --- DARK MODE ----  --}}
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.0/lib/darkmode-js.min.js"></script>
+<script src="./script.js"></script>
+<script>
+  new Darkmode().showWidget();
+</script>
+
+<style>
+
+</style>

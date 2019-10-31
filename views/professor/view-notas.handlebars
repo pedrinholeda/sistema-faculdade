@@ -1,0 +1,39 @@
+{{#each erros}}
+<div class="alert alert-danger">{{texto}}</div>
+{{else}}
+{{/each}}
+
+<div class="col-12 text-center my-5">
+  <h1 class="display-4"> Disciplinas Disponiveis <i class="fas fa-th-list"></i> </h1>
+  <p>Disciplinas que você leciona</p>
+</div>
+
+
+<table class="table table-striped table-bordered table-hover table-dark">
+  <thead class="table-active">
+    <thead class="table-active">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nome</th>
+        <th scope="col">ID</th>
+        <th scope="col">Notas</th>
+      </tr>
+    </thead>
+  <tbody>
+    {{#each materias}}
+    <tr>
+      <th scope="row">{{codigo}}</th>
+      <td>{{titulo}}</td>
+      <td>{{_id}}</td>
+      <td><a href="/professor/materias/notas/edit/{{_id}}">
+          <button class="btn btn-info">
+            <i class="far fa-edit"></i>
+            Notas
+          </button>
+        </a></td>
+    </tr>
+    {{else}}
+    <p>Nenhuma materias registrada!</p>
+    {{/each}}
+  </tbody>
+</table>

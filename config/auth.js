@@ -21,6 +21,25 @@ module.exports = function(passport) {
             }
             bcrypt.compare(senha, usuario.senha, (erro, batem) => {
               if (batem) {
+                ///// em teste /////////
+                if (usuario.eAdmin == true) {
+                  global.admin = true;
+                } else {
+                  global.admin = false;
+                }
+
+                if (usuario.eProfessor == true) {
+                  global.professor = true;
+                } else {
+                  global.professor = false;
+                }
+                if ((usuario.eAdmin, usuario.eProfessor == false)) {
+                  global.alun = true;
+                } else {
+                  global.alun = false;
+                }
+
+                ////////////////////////
                 return done(null, usuario);
               } else {
                 return done(null, false, { message: "Senha incorreta" });

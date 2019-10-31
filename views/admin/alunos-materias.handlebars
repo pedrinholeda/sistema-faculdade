@@ -1,0 +1,19 @@
+<h2>Lista de Materias:</h2>
+<hr>
+
+{{#each materias}}
+<div class="card mt-4">
+  <div class="card-body">
+    <h4>{{titulo}}</h4>
+    <p>Descrição: {{descricao}}</p>
+    <small>Data: {{data}}</small>
+    <br>
+    <small>Curso: {{curso.nome}}</small><br>
+    <a href="/admin/materias/alunos-materias/{{_id}}"><button class="btn btn-outline-success mt-3"> Matricular aluno
+      </button></a>
+    </button></a>
+  </div>
+</div>
+{{else}}
+<p>Nenhuma materias registrada!</p>
+{{/each}}
