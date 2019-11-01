@@ -25,6 +25,11 @@
           <h4>Nota Final</h4>
         </center>
       </th>
+      <th scope="col">
+        <center>
+          <h4>Situação</h4>
+        </center>
+      </th>
 
     </tr>
   </thead>
@@ -42,22 +47,48 @@
         </center>
       </td>
       <td>
+
         <center>
-          <h4 class="{{@index}}" id="p1">{{this.nota}}</h4>
+          {{#if this.status}}
+          <h4 id="notavermelha">{{this.nota}}</h4>
+          <style>
+            #notavermelha {
+              color: #ff493c;
+            }
+          </style>
+          {{else}}
+          <h4 id="nota">{{this.nota}}</h4>
+          <style>
+            #nota {
+              color: #3598db;
+            }
+          </style>
+          {{/if}}
+        </center>
+      </td>
+      <td>
+        <center>
+          {{#if this.status}}
+          <h4 id="re"><strong>RE</strong></h4>
+          {{!-- <style>
+            #re {
+              color: crimson
+            }
+          </style> --}}
+          {{else}}
+          <h4 id="ap"><strong>AP</strong></h4>
+          {{!-- <style>
+            #ap {
+              color: blue
+            }
+          </style> --}}
+
+
+
+          {{/if}}
         </center>
       </td>
     </tr>
     {{/each}}
   </tbody>
 </table>
-
-
-{{!-- <script>
-  if (("p1") == 0) {
-    document.getElementById("p1").style.color = "gray";
-  } else if (p1 =< 6) {
-    document.getElementById("p1").style.color = "blue";
-  } else {
-    document.getElementById("p1").style.color = "red";
-  }
-</script> --}}
