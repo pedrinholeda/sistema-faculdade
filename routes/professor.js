@@ -234,7 +234,39 @@ router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
           usuario
             .save()
             .then(() => {
-              res.redirect("/professor/view-notas");
+              Materia.findOne({ _id: materia })
+                .then(materia => {
+                  const matricula = []; //array de Alunos
+                  //for para colocar os alunos matriculados dentro dea variavel auxiliar matricula.
+                  for (var i = 0; i < materia.matriculados.length; i++) {
+                    matricula.push(materia.matriculados[i].user);
+                  }
+
+                  const discID = []; //Variavel auxiliar para guardar o id da materia
+
+                  discID.push({ text: materia._id });
+                  Usuario.find({ _id: matricula })
+                    .then(usuario => {
+                      res.render("professor/notas", {
+                        usuario: usuario,
+                        discID: discID,
+                        materia: materia
+                      });
+                    })
+                    .catch(err => {
+                      console.log(err);
+                      req.flash("error_msg", "Houve error interno ao testar");
+                      res.redirect("/");
+                    });
+                })
+                .catch(err => {
+                  console.log("err: ", err);
+                  req.flash(
+                    "error_msg",
+                    "Houve error ao carregar o formulario de lançamento"
+                  );
+                  res.redirect("/professor");
+                });
             })
             .catch(err => {
               console.log("error ao adicionar disciplina ao aluno: ", err);

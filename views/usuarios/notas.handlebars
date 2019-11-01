@@ -43,7 +43,7 @@
       </td>
       <td>
         <center>
-          <h4>{{this.nota}}</h4>
+          <h4 class="{{@index}}" id="p1">{{this.nota}}</h4>
         </center>
       </td>
     </tr>
@@ -51,6 +51,13 @@
   </tbody>
 </table>
 
-<script>
-  //iniciar troca de cor por valor 
-</script>
+
+{{!-- <script>
+  if (("p1") == 0) {
+    document.getElementById("p1").style.color = "gray";
+  } else if (p1 =< 6) {
+    document.getElementById("p1").style.color = "blue";
+  } else {
+    document.getElementById("p1").style.color = "red";
+  }
+</script> --}}
