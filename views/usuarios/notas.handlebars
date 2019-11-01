@@ -1,0 +1,99 @@
+{{#each erros}}
+<div class="alert alert-danger">
+</div>
+{{else}}
+{{/each}}
+<div class="col-12 text-center my-5">
+  <h1 class="display-4"> Notas de Provas <small><i class="fas fa-scroll"></i></small> </h1>
+</div>
+
+<div class="col-lg-12">
+  <table class="table  table-hover table-bordered mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">
+          <center>
+            <h4>Disciplina</h4>
+          </center>
+        </th>
+        <th scope="col">
+          <center>
+            <h4>Semestre</h4>
+          </center>
+        </th>
+        <th scope="col">
+          <center>
+            <h4>Nota Final</h4>
+          </center>
+        </th>
+        <th scope="col">
+          <center>
+            <h4>Situação</h4>
+          </center>
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {{#each notafinal}}
+      <tr>
+        <th scope="row">
+          <center>
+            <h4>{{this.materia}}</h4>
+          </center>
+        </th>
+        <td>
+          <center>
+            <h4>{{this.semestre}}</h4>
+          </center>
+        </td>
+        <td>
+
+          <center>
+            {{#if this.status}}
+            <h4 id="notavermelha">{{this.nota}}</h4>
+            <style>
+              #notavermelha {
+                color: #ff493c;
+              }
+            </style>
+            {{else}}
+            <h4 id="nota">{{this.nota}}</h4>
+            <style>
+              #nota {
+                color: #3598db;
+              }
+            </style>
+            {{/if}}
+          </center>
+        </td>
+        <td>
+          <center>
+            {{#if this.status}}
+            <h4 id="re"><strong>RE</strong></h4>
+            {{!-- <style>
+            #re {
+              color: crimson
+            }
+          </style> --}}
+            {{else}}
+            <h4 id="ap"><strong>AP</strong></h4>
+            {{!-- <style>
+            #ap {
+              color: blue
+            }
+          </style> --}}
+
+
+
+            {{/if}}
+          </center>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <p class="text-danger pull-right">Toda nota que se encontra abaixo da média <strong>6 </strong>recebe o status de
+    reprovada</p>
+</div>

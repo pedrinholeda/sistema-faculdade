@@ -54,15 +54,3 @@
 - Feito isso salve o codigo, suba o servidor e cadastre o usuario, cadastrado o usuario no banco de dados ele vira com privilegios de administrador, após cadastrar retorne a constante novoUsuario para forma antiga (sem o eAdmin) e suba o servidor novamente.
 
 - Apos criar um usuario com privilegios de administrador, a opção de gerenciar sera liberada na NavBar, lá e possivel criar um novo usuario administrador por meio do front-end.
-
-## 2 - Problemas
-
-Lista de funcionalidades a serem desenvolvidas e status de progresso
-
-|      Problema      |                                        Descrição                                        |    Status     |
-| :----------------: | :-------------------------------------------------------------------------------------: | :-----------: |
-|   Arrumar models   |                  definir models de forma defifnitiva, que atenda a app                  | Desenvolvendo |
-|       Notas        | Fazer rotas de get, post, put e delete das notas e referenciar elas a alunos e materias | Desenvolvendo |
-|       Alunos       |                Fazer rotas e view para cadastrar alunos nas disciplinas                 | Desenvolvendo |
-| Relacionamentos BD |                    Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA                     | Desenvolvendo |
-|     Professor      |        criar professor e diferenciar as permissoes de professor e administrador         | Desenvolvendo |
