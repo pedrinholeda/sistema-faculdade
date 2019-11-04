@@ -446,8 +446,27 @@ router.get("/minhaconta/:id", async (req, res) => {
   try {
     Usuario.findOne({ _id: req.params.id })
       .then(usuario => {
+        const notafinal = [];
+        for (var i = 0; i < usuario.notas.length; i++) {
+          if (usuario.notas[i].nota < 6) {
+            notafinal.push({
+              nota: usuario.notas[i].nota,
+              materia: usuario.notas[i].materia,
+              semestre: usuario.notas[i].semestre,
+              status: true
+            });
+          } else {
+            notafinal.push({
+              nota: usuario.notas[i].nota,
+              materia: usuario.notas[i].materia,
+              semestre: usuario.notas[i].semestre,
+              status: false
+            });
+          }
+        }
         res.render("usuarios/minhaconta", {
-          usuario: usuario
+          usuario: usuario,
+          notafinal: notafinal
         });
       })
       .catch(err => {

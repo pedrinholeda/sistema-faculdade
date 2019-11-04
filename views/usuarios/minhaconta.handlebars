@@ -4,13 +4,6 @@
 {{else}}
 {{/each}}
 
-{{!-- <center>
-  <h4>Nome: <strong> {{usuario.nome}} </strong></h4>
-  <p> email:<strong> {{usuario.email}}</strong></p>
-  <br>
-</center> --}}
-
-
 <div class="container emp-profile">
   <form method="post">
     <div class="row">
@@ -110,28 +103,27 @@
 
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-
-
-
-
             <div class="row">
               <div class="col-md-6">
-                <label>Materia:</label>
+                <label><strong> Materia </strong></label>
               </div>
               <div class="col-md-6">
-                <p>Semestre: </p>
+                <p> <strong> Semestre </strong></p>
               </div>
             </div>
 
-
-
-
+            {{#each notafinal}}
             <div class="row">
-              <div class="col-md-12">
-                <label>Your Bio</label><br />
-
+              <div class="col-md-6">
+                <label>{{this.materia}}</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{this.semestre}} </p>
               </div>
             </div>
+            {{else}}
+            {{/each}}
+
           </div>
         </div>
       </div>
