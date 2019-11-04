@@ -441,4 +441,23 @@ router.get("/minhas-notas", async (req, res) => {
   }
 });
 
+//rota de minha conta
+router.get("/minhaconta/:id", async (req, res) => {
+  try {
+    Usuario.findOne({ _id: req.params.id })
+      .then(usuario => {
+        res.render("usuarios/minhaconta", {
+          usuario: usuario
+        });
+      })
+      .catch(err => {
+        console.log("err: ", err);
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
+  }
+});
+
 module.exports = router;

@@ -24,6 +24,16 @@ const Usuario = new Schema({
     unique: true,
     lowercase: true
   },
+  telefone: {
+    type: String,
+    required: false,
+    default: "(61) 9999-9999"
+  },
+  profissao: {
+    type: String,
+    required: false,
+    default: "Nenhuma"
+  },
   eAdmin: {
     type: Number,
     default: 0
