@@ -4,133 +4,80 @@
 {{else}}
 {{/each}}
 
-<div class="container emp-profile">
-  <form method="post">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="profile-img">
-          <img src="https://i.imgur.com/FPCrUDI.jpg" alt="" />
-          <div class="file btn btn-lg btn-primary">
-            Change Photo
-            <input type="file" name="file" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="profile-head">
-          <h3>
-            {{usuario.nome}}
-          </h3>
-          <h6>
-            {{usuario.profissao}}
-          </h6>
-          {{!-- <p class="proile-rating">RANKINGS : <span>8/10</span></p> --}}
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">Sobre</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Materias Cursadas</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <a href="usuarios/minhaconta/edit/{{_id}}"><input type="submit" class="profile-edit-btn" name="btnAddMore"
-            value="Editar Perfil" /></a>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="profile-img">
+      <img src="https://i.imgur.com/FPCrUDI.jpg" alt="" />
+      <div class="file btn btn-lg btn-primary">
+        Change Photo
+        <input type="file" name="file" />
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="profile-work">
-          <p>
-            <center><strong> Biografia </strong> </center>
-          </p>
-          <p>
-            It is a long established fact that a reader will be distracted by the readable content of a page when
-            looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
-            letters, as opposed to using 'Content here, content here', making it look like readable English. Many
-            desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-            search for 'lorem ipsum' will uncover many web sites still in their infancy.
-          </p>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="tab-content profile-tab" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Matricula:</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{usuario.id}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Nome Completo:</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{usuario.nome}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Email:</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{usuario.email}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Telefone: </label>
-              </div>
-              <div class="col-md-6">
-                <p>{{usuario.telefone}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Profissão:</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{usuario.profissao}}</p>
-              </div>
-            </div>
-          </div>
+  </div>
+  <div class="col-md-6">
+    <div class="profile-head">
+      <h3>
+        {{usuario.nome}}
+      </h3>
+      <h6>
+        {{usuario.profissao}}
+      </h6>
+      {{!-- <p class="proile-rating">RANKINGS : <span>8/10</span></p> --}}
 
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-            <div class="row">
-              <div class="col-md-6">
-                <label><strong> Materia </strong></label>
-              </div>
-              <div class="col-md-6">
-                <p> <strong> Semestre </strong></p>
-              </div>
-            </div>
-
-            {{#each notafinal}}
-            <div class="row">
-              <div class="col-md-6">
-                <label>{{this.materia}}</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{this.semestre}} </p>
-              </div>
-            </div>
-            {{else}}
-            {{/each}}
-
-          </div>
-        </div>
-      </div>
     </div>
-  </form>
+  </div>
 </div>
+
+
+<form action="/usuarios/user/edit" method="POST">
+  <input type="hidden" value="{{materia._id}}" name="id">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"></div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Matricula:</label>
+    </div>
+    <div class="col-md-6">
+      <p><strong>{{usuario.id}} </strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Nome Completo:</label>
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="nome" class="form-control" value="{{usuario.nome}}">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Email:</label>
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="nome" class="form-control" value="{{usuario.email}}">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Telefone: </label>
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="nome" class="form-control" value="{{usuario.telefone}}">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Profissão:</label>
+    </div>
+    <div class="col-md-6">
+      <input type="text" name="nome" class="form-control" value="{{usuario.profissao}}">
+    </div>
+  </div>
+  <br>
+  <br>
+  <center><button class="btn btn-outline-success mt-4" type="submit">Salvar Alterações</button></center>
+</form>
 
 
 <style>
