@@ -501,17 +501,29 @@ router.get("/minhaconta/edit/:id", async (req, res) => {
 router.post("/user/edit", async (req, res) => {
   try {
     const user = req.user.id;
+    const nome = req.body.nome;
+    const email = req.body.email;
+    const telefone = req.body.telefone;
+    const profissao = req.body.profissao;
+
     Usuario.findOne({ _id: user })
       .then(usuario => {
-        usuario.nome = req.body.nome;
-        usuario.email = req.body.email;
-        usuario.telefone = req.body.telefone;
-        usuario.profissao = req.body.profissao;
+        usuario.nome = nome;
+        usuario.email = email;
+        usuario.telefone = telefone;
+        usuario.profissao = profissao;
 
-        usuario.save().then(() => {
-          req.flash("success_msg", "Usuario editado com sucesso!");
-          res.redirect("/");
-        });
+        usuario
+          .save()
+          .then(() => {
+            req.flash("success_msg", "Usuario editado com sucesso!");
+            res.redirect("/");
+          })
+          .catch(err => {
+            console.log("erro 2: ", err);
+            req.flash("error_msg", "Error!");
+            res.redirect("/");
+          });
       })
       .catch(err => {
         console.log("err: ", err);
