@@ -188,6 +188,7 @@ router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
   //const nome = req.body.nome;
   const matricula = req.body.matricula;
   const nota = req.body.nota;
+  var notav = req.body.nota;
   const semestre = req.body.semestre;
   const materia = req.body.materia;
   var nome;
@@ -250,7 +251,8 @@ router.post("/notas/matricula/:id", eProfessor, async (req, res) => {
                       res.render("professor/notas", {
                         usuario: usuario,
                         discID: discID,
-                        materia: materia
+                        materia: materia,
+                        notav: notav
                       });
                     })
                     .catch(err => {

@@ -441,4 +441,99 @@ router.get("/minhas-notas", async (req, res) => {
   }
 });
 
+//rota de minha conta
+router.get("/minhaconta/:id", async (req, res) => {
+  try {
+    Usuario.findOne({ _id: req.params.id })
+      .then(usuario => {
+        const notafinal = [];
+        for (var i = 0; i < usuario.notas.length; i++) {
+          if (usuario.notas[i].nota < 6) {
+            notafinal.push({
+              nota: usuario.notas[i].nota,
+              materia: usuario.notas[i].materia,
+              semestre: usuario.notas[i].semestre,
+              status: true
+            });
+          } else {
+            notafinal.push({
+              nota: usuario.notas[i].nota,
+              materia: usuario.notas[i].materia,
+              semestre: usuario.notas[i].semestre,
+              status: false
+            });
+          }
+        }
+        res.render("usuarios/minhaconta", {
+          usuario: usuario,
+          notafinal: notafinal
+        });
+      })
+      .catch(err => {
+        console.log("err: ", err);
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
+  }
+});
+//Rota de edit my profile
+router.get("/minhaconta/edit/:id", async (req, res) => {
+  try {
+    Usuario.findOne({ _id: req.params.id })
+      .then(usuario => {
+        res.render("usuarios/editminhaconta", {
+          usuario: usuario
+        });
+      })
+      .catch(err => {
+        console.log("err: ", err);
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
+  }
+});
+
+///////////////Rota quebrada////////////////////
+router.post("/user/edit", async (req, res) => {
+  try {
+    const user = req.user.id;
+    const nome = req.body.nome;
+    const email = req.body.email;
+    const telefone = req.body.telefone;
+    const profissao = req.body.profissao;
+
+    Usuario.findOne({ _id: user })
+      .then(usuario => {
+        usuario.nome = nome;
+        usuario.email = email;
+        usuario.telefone = telefone;
+        usuario.profissao = profissao;
+
+        usuario
+          .save()
+          .then(() => {
+            req.flash("success_msg", "Usuario editado com sucesso!");
+            res.redirect("/");
+          })
+          .catch(err => {
+            console.log("erro 2: ", err);
+            req.flash("error_msg", "Error!");
+            res.redirect("/");
+          });
+      })
+      .catch(err => {
+        console.log("err: ", err);
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
+  }
+});
+///////////////Rota quebrada////////////////////
+
 module.exports = router;

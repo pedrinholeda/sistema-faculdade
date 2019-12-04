@@ -194,26 +194,27 @@ app.get("/post", (req, res) => {
 });
 
 //////////////Usar para cadatro///////////////
-app.get("/teste", (req, res) => {
-  const user = "5daf5005ccf69a138f339d00";
+// app.get("/teste", (req, res) => {
+//   const user = "5daf5005ccf69a138f339d00";
 
-  Usuario.findOne({ _id: user }).then(usuarios => {
-    usuarios.notas.push({
-      av1: 8,
-      av2: 6,
-      materias: "5daf578db1d9661589987b38",
-      semestre: "2019.2"
-    });
-    usuarios.save().then(() => {
-      res.send({ usuarios });
-    });
-  });
-});
+//   Usuario.findOne({ _id: user }).then(usuarios => {
+//     usuarios.notas.push({
+//       av1: 8,
+//       av2: 6,
+//       materias: "5daf578db1d9661589987b38",
+//       semestre: "2019.2"
+//     });
+//     usuarios.save().then(() => {
+//       res.send({ usuarios });
+//     });
+//   });
+// });
 ////////////////////////////////////////////////
 
 app.use("/admin", admin);
 app.use("/professor", professor);
 app.use("/usuarios", usuarios);
+// app.use("/files", express.static());
 //outros
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
