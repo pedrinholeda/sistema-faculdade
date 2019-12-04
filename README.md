@@ -102,3 +102,29 @@ npm run dev
 - Feito isso salve o codigo, suba o servidor e cadastre o usuario, cadastrado o usuario no banco de dados ele vira com privilegios de administrador, após cadastrar retorne a constante novoUsuario para forma antiga (sem o eAdmin) e suba o servidor novamente.
 
 - Apos criar um usuario com privilegios de administrador, a opção de gerenciar sera liberada na NavBar, lá e possivel criar um novo usuario administrador por meio do front-end.
+
+# Capturas de Tela da Aplicação
+
+## Tela inicial.
+
+![](./public/img/capturas/cap01.png)
+
+## Tela de Login.
+
+![](./public/img/capturas/cap02.png)
+
+## Tela de Perfil.
+
+![](./public/img/capturas/cap03.png)
+
+## Tela de quadro de notas do Usuario.
+
+![](./public/img/capturas/cap04.png)
+
+## Tela de quadro de materias (Professor).
+
+![](./public/img/capturas/cap05.png)
+
+## ela de Lançamento de notas (Professor)
+
+![](./public/img/capturas/cap06.png)
