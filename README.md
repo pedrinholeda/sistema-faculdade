@@ -128,3 +128,5 @@ npm run dev
 ## ela de Lançamento de notas (Professor)
 
 ![](./public/img/capturas/cap06.png)
+
+-status Finalizado.
