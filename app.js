@@ -20,12 +20,13 @@ const Curso = mongoose.model("cursos");
 const usuarios = require("./routes/usuario");
 const passport = require("passport");
 require("./config/auth")(passport);
+const config = require("./config/env").loadConfig();
 
 //configurações
 // Sessão
 app.use(
   session({
-    secret: "cursodenode",
+    secret: config.sessionSecret,
     resave: true,
     saveUninitialized: true
   })
@@ -73,7 +74,7 @@ app.set("view engine", "handlebars");
 // Mongoose
 mongoose.Promise = global.Promise;
 mongoose
-  .connect("mongodb://localhost/sistema-faculdade")
+  .connect(config.mongoUri)
   .then(() => {
     console.log("Conectado com o Mongo");
   })
@@ -216,7 +217,6 @@ app.use("/professor", professor);
 app.use("/usuarios", usuarios);
 // app.use("/files", express.static());
 //outros
-const PORT = process.env.PORT || 8081;
-app.listen(PORT, () => {
+app.listen(config.port, () => {
   console.log("Servidor Rodando! ");
 });

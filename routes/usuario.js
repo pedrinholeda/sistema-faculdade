@@ -8,6 +8,7 @@ const passport = require("passport");
 const { eAdmin } = require("../helpers/eAdmin");
 const crypto = require("crypto");
 const mailer = require("../modules/mailer");
+const { mail: { from: mailFrom } } = require("../config/env").loadConfig();
 
 router.get("/registro", (req, res) => {
   res.render("usuarios/registro");
@@ -311,7 +312,7 @@ router.post("/forgot_password", async (req, res) => {
     mailer.sendMail(
       {
         to: email,
-        from: "pedro.guimaraes@firstdecision.com.br",
+        from: mailFrom,
         template: "auth/forgot_password",
         context: { token }
       },
