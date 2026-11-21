@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
-const hbs = require("nodemailer-express-handlebars");
+const hbsModule = require("nodemailer-express-handlebars");
+const hbs = hbsModule.default || hbsModule;
 const path = require("path");
 const { mail } = require("../config/env").loadConfig();
 
@@ -17,8 +18,8 @@ transport.use(
   hbs({
     // configurando transporte
     viewEngine: {
-      viewEngine: "handlebars",
-      partialsDir: "some/path",
+      extname: ".html",
+      partialsDir: path.resolve("./resources/mail/"),
       defaultLayout: false
     },
     viewPath: path.resolve("./resources/mail/"),

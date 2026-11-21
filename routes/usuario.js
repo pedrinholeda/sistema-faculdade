@@ -111,10 +111,12 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/logout", (req, res) => {
-  req.logout();
-  req.flash("success_msg", "Deslogado com sucesso!");
-  res.redirect("/");
+router.get("/logout", (req, res, next) => {
+  req.logout(err => {
+    if (err) return next(err);
+    req.flash("success_msg", "Deslogado com sucesso!");
+    res.redirect("/");
+  });
 });
 
 router.get("/registroADM", eAdmin, (req, res) => {
