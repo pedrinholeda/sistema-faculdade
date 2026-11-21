@@ -1,7 +1,6 @@
 //carregando modulos
 const express = require("express");
-const handlebars = require("express-handlebars");
-const bodyParser = require("body-parser");
+const { engine } = require("express-handlebars");
 const app = express();
 const admin = require("./routes/admin");
 const professor = require("./routes/professor");
@@ -65,14 +64,20 @@ app.use((req, res, next) => {
 
   next();
 });
-// Body Parser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// Body parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 // Handlebars
-app.engine("handlebars", handlebars({ defaultLayout: "main" }));
+app.engine(
+  "handlebars",
+  engine({
+    defaultLayout: "main",
+    // Views receive Mongoose documents; allow reading their fields.
+    runtimeOptions: { allowProtoPropertiesByDefault: true }
+  })
+);
 app.set("view engine", "handlebars");
 // Mongoose
-mongoose.Promise = global.Promise;
 mongoose
   .connect(config.mongoUri)
   .then(() => {
@@ -217,6 +222,10 @@ app.use("/professor", professor);
 app.use("/usuarios", usuarios);
 // app.use("/files", express.static());
 //outros
-app.listen(config.port, () => {
-  console.log("Servidor Rodando! ");
-});
+if (require.main === module) {
+  app.listen(config.port, () => {
+    console.log("Servidor Rodando! ");
+  });
+}
+
+module.exports = app;

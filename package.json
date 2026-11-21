@@ -4,7 +4,7 @@
   "description": "College management prototype: courses, subjects, enrollment and grades",
   "main": "index.js",
   "scripts": {
-    "test": "node --test",
+    "test": "node --test --test-concurrency=1",
     "start": "node --env-file-if-exists=.env app.js",
     "dev": "nodemon --exec \"node --env-file-if-exists=.env\" app.js",
     "check": "node --check app.js"
@@ -13,22 +13,22 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
-    "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
-    "express-session": "^1.16.2",
+    "express": "^4.22.3",
+    "express-handlebars": "^9.0.6",
+    "express-session": "^1.19.0",
     "font-awesome": "^4.7.0",
-    "mdbootstrap": "^4.8.10",
-    "mongoose": "^5.7.7",
-    "multer": "^1.4.2",
-    "nodemailer": "^6.3.1",
-    "nodemailer-express-handlebars": "^3.1.0",
-    "passport": "^0.4.0",
+    "mongoose": "^9.12.3",
+    "multer": "^2.5.0",
+    "nodemailer": "^10.6.1",
+    "nodemailer-express-handlebars": "^7.0.0",
+    "passport": "^0.7.0",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.3"
+    "mongodb-memory-server": "^11.3.0",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.3.2"
   },
   "repository": {
     "type": "git",
