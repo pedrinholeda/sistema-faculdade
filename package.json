@@ -1,12 +1,13 @@
 {
-  "name": "blog-app",
+  "name": "sistema-faculdade",
   "version": "1.0.0",
-  "description": "",
+  "description": "College management prototype: courses, subjects, enrollment and grades",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "check": "node --check app.js"
   },
   "author": "",
   "license": "ISC",
@@ -31,10 +32,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pedrinholeda/Blog-APP.git"
+    "url": "git+https://github.com/pedrinholeda/sistema-faculdade.git"
   },
   "bugs": {
-    "url": "https://github.com/pedrinholeda/Blog-APP/issues"
+    "url": "https://github.com/pedrinholeda/sistema-faculdade/issues"
   },
-  "homepage": "https://github.com/pedrinholeda/Blog-APP#readme"
+  "homepage": "https://github.com/pedrinholeda/sistema-faculdade#readme",
+  "engines": {
+    "node": ">=22"
+  }
 }
