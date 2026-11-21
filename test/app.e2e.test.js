@@ -94,3 +94,23 @@ test("an admin creates a course that shows on the public page", async () => {
   const page = await request(app).get("/cursos").expect(200);
   assert.match(page.text, /Engenharia/);
 });
+
+test("the menu follows the logged-in user, not the last login", async () => {
+  const student = request.agent(app);
+  await student
+    .post("/usuarios/login")
+    .type("form")
+    .send({ email: "ana@example.com", senha: "1234" })
+    .expect(302);
+
+  // Someone else logs in as admin after the student.
+  await request
+    .agent(app)
+    .post("/usuarios/login")
+    .type("form")
+    .send({ email: "admin@example.com", senha: "admin" })
+    .expect(302);
+
+  const home = await student.get("/").expect(200);
+  assert.doesNotMatch(home.text, /href="\/admin"/);
+});

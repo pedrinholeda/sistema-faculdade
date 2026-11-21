@@ -20,6 +20,7 @@ const usuarios = require("./routes/usuario");
 const passport = require("passport");
 require("./config/auth")(passport);
 const config = require("./config/env").loadConfig();
+const { menuFlags } = require("./helpers/menuFlags");
 
 //configurações
 // Sessão
@@ -42,25 +43,8 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null; // armazena dados do usuario logado
 
-  /// Em Teste ////
-  if (global.admin == true) {
-    res.locals.adm = true;
-  } else {
-    res.locals.adm = false;
-  }
-
-  if (global.professor == true) {
-    res.locals.prof = true;
-  } else {
-    res.locals.prof = false;
-  }
-
-  if (global.alun == true) {
-    res.locals.aluno = true;
-  } else {
-    res.locals.aluno = false;
-  }
-  /////////////////////
+  // Menu flags come from the user of this request.
+  Object.assign(res.locals, menuFlags(req.user));
 
   next();
 });
