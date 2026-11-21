@@ -86,3 +86,7 @@ test/             node:test suites
 
 Finished as a study prototype. It is not production-ready: there is no CSRF protection and no
 rate limiting on login.
+
+## License
+
+[MIT](LICENSE)

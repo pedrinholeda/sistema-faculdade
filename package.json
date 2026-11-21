@@ -9,8 +9,8 @@
     "dev": "nodemon --exec \"node --env-file-if-exists=.env\" app.js",
     "check": "node --check app.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Pedro Leda",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
